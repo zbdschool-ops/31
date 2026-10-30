@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>§ 31. Доброчинність | Тренажер «Навігатор ризиків»</title>
+<style>
+:root{--primary:#1e3a8a;--primary-dark:#1e2a5e;--primary-light:#3b5ccc;--accent:#2563eb;--success:#16a34a;--danger:#dc2626;--warning:#f59e0b;--bg:#f1f5f9;--card:#fff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--theory-blue:#dbeafe;--theory-green:#dcfce7;--theory-purple:#f3e8ff;--theory-orange:#ffedd5;--theory-pink:#fce7f3;--theory-yellow:#fef3c7;--theory-red:#fee2e2}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#f3f4f6,#e5e7eb);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;font-size:16px}
+.top-progress-bar{position:fixed;top:0;left:0;right:0;height:4px;background:var(--border);z-index:1001}
+.top-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--success));width:0%;transition:width .5s}
+.progress-widget{position:fixed;top:80px;right:20px;background:#fff;padding:10px 12px;border-radius:10px;box-shadow:0 2px 10px rgba(30,58,138,.12);z-index:1000;min-width:150px;cursor:pointer;transition:all .3s}
+.progress-widget:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(30,58,138,.18)}
+.progress-widget-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.progress-widget-title{font-weight:700;color:var(--primary);font-size:12px}
+.progress-widget-percentage{font-size:18px;font-weight:700;color:var(--accent)}
+.progress-widget-mini-map{display:flex;gap:4px;margin-top:8px}
+.mini-step{width:18px;height:18px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;color:var(--text-muted);transition:all .3s}
+.mini-step.current{background:var(--warning);color:#fff;animation:pulse 1.5s infinite}
+.mini-step.completed{background:var(--success);color:#fff}
+.toast-container{position:fixed;top:100px;right:20px;z-index:1002;display:flex;flex-direction:column;gap:8px;max-width:calc(100vw - 40px)}
+.toast{background:#fff;padding:16px 20px;border-radius:12px;box-shadow:0 8px 24px rgba(30,58,138,.2);display:flex;align-items:center;gap:12px;animation:toastIn .4s;border-left:4px solid var(--success);min-width:280px;max-width:360px}
+.toast.hiding{animation:toastOut .4s forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(100px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(100px)}}
+.toast-icon{font-size:24px;flex-shrink:0}
+.toast-message{font-weight:600;color:var(--text);font-size:14px}
+.header{background:linear-gradient(135deg,#1e2a5e 0%,#1e3a8a 50%,#2563eb 100%);color:#fff;padding:24px 32px;border-radius:0 0 16px 16px;box-shadow:0 4px 16px rgba(30,58,138,.15);margin-top:4px}
+.header-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.header h1{font-size:22px;font-weight:700;flex:1;min-width:200px}
+.header-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn{padding:12px 24px;border-radius:10px;font-weight:600;cursor:pointer;transition:all .2s;border:none;font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#1d4ed8;box-shadow:0 4px 12px rgba(37,99,235,.3);transform:translateY(-2px)}
+.btn-secondary{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+.btn-secondary:hover{background:#eff6ff}
+.btn-warning{background:var(--warning);color:#fff}
+.btn-warning:hover{background:#d97706}
+.btn-success{background:var(--success);color:#fff}
+.btn-success:hover{background:#15803d}
+.btn:focus{outline:3px solid #93c5fd;outline-offset:2px}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+.hero-unified{background:#fff;border-radius:16px;box-shadow:0 4px 16px rgba(30,58,138,.08);overflow:hidden;display:grid;grid-template-columns:1.3fr .7fr;align-items:stretch}
+.hero-illustration{background:#fff;padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.hero-illustration img{max-width:100%;height:auto;max-height:500px;object-fit:contain;border-radius:16px;display:block;margin:0 auto}
+.hero-illustration-title{color:var(--primary);font-size:20px;font-weight:700;margin-bottom:16px;padding-bottom:5px;border-bottom:2px solid var(--border);display:flex;align-items:center;justify-content:center;gap:8px}
+.hero-navigation{padding:20px 24px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid #e2e8f0}
+.hero-navigation h2{color:var(--primary);font-size:16px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+.step-navigation{display:flex;flex-direction:column;gap:8px;flex:1}
+.step-nav-item{padding:8px 10px;border-radius:6px;cursor:pointer;transition:all .3s;border:2px solid var(--border);display:flex;align-items:center;gap:10px}
+.step-nav-item:hover{border-color:var(--accent);background:#eff6ff;transform:translateX(4px)}
+.step-nav-item.active{border-color:var(--warning);background:#fef3c7}
+.step-nav-item.completed{border-color:var(--success);background:#dcfce7}
+.step-nav-number{width:26px;height:26px;border-radius:50%;background:var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:11px}
+.step-nav-item.active .step-nav-number{background:var(--warning);color:#fff}
+.step-nav-item.completed .step-nav-number{background:var(--success);color:#fff}
+.step-nav-content{flex:1;min-width:0}
+.step-nav-title{font-weight:600;color:var(--text);font-size:12px;line-height:1.3}
+.step-nav-status{font-size:10px;color:var(--text-muted)}
+.info-blocks{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+.card{background:var(--card);border-radius:16px;padding:28px;box-shadow:0 4px 16px rgba(30,58,138,.08);margin-bottom:24px;transition:box-shadow .2s}
+.card:hover{box-shadow:0 8px 24px rgba(30,58,138,.14)}
+.card h2{font-size:22px;margin-bottom:16px;color:var(--primary)}
+.card h3{font-size:18px;margin-bottom:12px;color:var(--primary-dark)}
+.feature-list{list-style:none;padding:0}
+.feature-list li{padding:10px 0 10px 32px;position:relative;border-bottom:1px solid var(--border);font-size:15px}
+.feature-list li:last-child{border-bottom:none}
+.feature-list li::before{content:attr(data-icon);position:absolute;left:0;font-size:18px;top:10px}
+.tip-card{background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:12px;padding:16px;text-align:center;margin-top:24px;font-size:15px}
+.step-header{background:#fff;border-radius:16px;padding:24px;margin-bottom:24px;box-shadow:0 4px 16px rgba(30,58,138,.08)}
+.step-header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.step-title{font-size:24px;color:var(--primary);font-weight:700}
+.step-badge{background:var(--warning);color:#fff;padding:6px 16px;border-radius:20px;font-weight:600;font-size:14px}
+.theory-compact{background:linear-gradient(135deg,var(--theory-blue),#bfdbfe);border:2px solid #93c5fd;border-radius:14px;padding:20px;margin:16px 0}
+.theory-compact h4{color:var(--primary);font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.theory-compact p{font-size:14px;line-height:1.6;margin-bottom:8px}
+.theory-compact ul{list-style:none;padding:0}
+.theory-compact ul li{padding:6px 0 6px 24px;position:relative;font-size:14px}
+.theory-compact ul li::before{content:attr(data-icon);position:absolute;left:0;font-size:16px;top:6px}
+.key-point{background:linear-gradient(135deg,#fef3c7,#fde68a);border:2px solid #fbbf24;border-radius:12px;padding:16px;margin:16px 0;text-align:center;font-weight:600;color:#78350f}
+.key-point::before{content:'💡';font-size:20px}
+.situation-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:24px;margin:24px 0;align-items:start}
+.situation-illustration-left{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #93c5fd;border-radius:12px;padding:20px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:240px}
+.situation-img{max-width:100%;height:auto;max-height:200px;object-fit:contain;border-radius:8px;margin-bottom:12px;display:block;margin-left:auto;margin-right:auto}
+.situation-caption{font-size:13px;color:var(--text-muted);font-style:italic;margin-top:8px}
+.situation-content-right{display:flex;flex-direction:column;gap:16px}
+.question-highlight{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid #f59e0b;border-radius:16px;padding:20px 24px;margin-bottom:20px;text-align:center;box-shadow:0 4px 16px rgba(245,158,11,.15);position:relative;overflow:hidden}
+.question-highlight-icon{font-size:48px;margin-bottom:8px;display:block}
+.question-highlight-text{font-size:20px;font-weight:700;color:#78350f;line-height:1.4;position:relative;z-index:1}
+.question-highlight-sub{font-size:14px;color:#92400e;margin-top:8px;font-style:italic;position:relative;z-index:1}
+.task-options{display:grid;gap:12px;margin:20px 0}
+.option{padding:16px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:12px}
+.option:hover:not(.disabled){border-color:var(--accent);background:#eff6ff}
+.option.selected{border-color:var(--accent);background:#eff6ff}
+.option.correct{border-color:var(--success);background:#dcfce7}
+.option.incorrect{border-color:var(--danger);background:#fee2e2}
+.option.disabled{cursor:default;opacity:.8}
+.option-radio,.option-checkbox{width:24px;height:24px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.option-radio{border-radius:50%}
+.option-checkbox{border-radius:6px}
+.option.selected .option-radio,.option.selected .option-checkbox{border-color:var(--accent);background:var(--accent)}
+.option.selected .option-radio::after,.option.selected .option-checkbox::after{content:'✓';color:#fff;font-size:14px}
+.option.correct .option-radio,.option.correct .option-checkbox{border-color:var(--success);background:var(--success)}
+.option.correct .option-radio::after,.option.correct .option-checkbox::after{content:'✓';color:#fff;font-size:14px}
+.option.incorrect .option-radio,.option.incorrect .option-checkbox{border-color:var(--danger);background:var(--danger)}
+.option.incorrect .option-radio::after,.option.incorrect .option-checkbox::after{content:'✕';color:#fff;font-size:14px}
+.option-text{flex:1}
+.option-label{font-weight:600;margin-bottom:4px}
+.feedback{padding:16px;border-radius:12px;margin:16px 0;animation:fadeIn .3s}
+.feedback-success{background:#dcfce7;border:2px solid var(--success);color:#166534}
+.feedback-error{background:#fee2e2;border:2px solid var(--danger);color:#991b1b}
+.feedback-warning{background:#fef3c7;border:2px solid var(--warning);color:#92400e}
+.navigation{display:flex;justify-content:space-between;gap:12px;margin-top:32px;flex-wrap:wrap}
+.navigation .btn{flex:1;min-width:140px}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:2000;opacity:0;visibility:hidden;transition:all .3s;padding:20px}
+.modal-overlay.active{opacity:1;visibility:visible}
+.modal{background:#fff;border-radius:16px;padding:32px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 12px 40px rgba(30,58,138,.22);transform:scale(.9);transition:transform .3s}
+.modal-overlay.active .modal{transform:scale(1)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:12px}
+.modal-header h2{color:var(--primary);font-size:22px}
+.modal-close{background:none;border:none;font-size:28px;cursor:pointer;color:var(--text-muted);width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px}
+.modal-close:hover{background:var(--bg);color:var(--text)}
+.text-center{text-align:center}
+.mb-24{margin-bottom:24px}
+.mt-24{margin-top:24px}
+.hidden{display:none!important}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.step6-header{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:32px;border-radius:16px;margin-bottom:24px;text-align:center;box-shadow:0 4px 16px rgba(245,158,11,.3)}
+.step6-header h2{font-size:28px;font-weight:800;margin-bottom:8px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:24px}
+.stat-card{background:#fff;padding:20px;border-radius:12px;box-shadow:0 4px 12px rgba(30,58,138,.08);text-align:center}
+.stat-value{font-size:32px;font-weight:800;color:var(--primary)}
+.stat-label{font-size:14px;color:var(--text-muted);margin-top:4px}
+.progress-circle-container{display:flex;justify-content:center;align-items:center;margin:24px 0}
+.progress-circle{width:180px;height:180px;border-radius:50%;background:conic-gradient(var(--success) 0%,var(--bg) 0%);display:flex;justify-content:center;align-items:center;transition:background 1s;box-shadow:0 4px 16px rgba(30,58,138,.1)}
+.progress-circle-inner{width:140px;height:140px;background:#fff;border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.circle-percentage{font-size:40px;font-weight:800;color:var(--primary)}
+.circle-label{font-size:14px;color:var(--text-muted)}
+.level-badge{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #bfdbfe;padding:16px 24px;border-radius:12px;margin:16px 0}
+.level-badge-icon{font-size:40px}
+.level-badge-title{font-size:18px;font-weight:700;color:var(--primary)}
+.level-badge-desc{font-size:14px;color:var(--text-muted)}
+.skill-eval{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.skill-eval:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.skill-title{font-weight:600;font-size:16px}
+.star-rating{display:flex;gap:8px;margin-top:8px}
+.star{font-size:24px;cursor:pointer;color:var(--border);transition:color .2s}
+.star:hover,.star.active{color:var(--warning)}
+.accordion-item{background:#fff;border:2px solid var(--border);border-radius:12px;margin:12px 0;transition:border-color .3s}
+.accordion-item:hover{border-color:var(--accent)}
+.accordion-item.active{border-color:var(--accent)}
+.accordion-header{padding:16px 20px;background:linear-gradient(135deg,#eff6ff,#dbeafe);cursor:pointer;font-weight:600;color:var(--primary);display:flex;justify-content:space-between;align-items:center;transition:all .2s;user-select:none;border-radius:10px}
+.accordion-header:hover{background:linear-gradient(135deg,#dbeafe,#bfdbfe)}
+.accordion-item.active .accordion-header{border-radius:10px 10px 0 0;background:linear-gradient(135deg,#dbeafe,#bfdbfe)}
+.accordion-icon{font-size:20px;transition:transform .3s;flex-shrink:0;margin-left:8px}
+.accordion-item.active .accordion-icon{transform:rotate(180deg)}
+.accordion-content{max-height:0;overflow:hidden;transition:max-height .4s ease-out}
+.accordion-item.active .accordion-content{max-height:5000px;overflow:visible}
+.accordion-body{padding:16px 20px;border-top:2px solid var(--border);background:#fff;border-radius:0 0 10px 10px}
+.traffic-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0}
+.traffic-col{background:#fff;border:2px solid var(--border);border-radius:12px;padding:16px;min-height:200px;transition:all .2s}
+.traffic-col h4{margin-bottom:12px;font-size:14px;padding:10px;border-radius:8px;text-align:center}
+.traffic-col.green h4{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#166534}
+.traffic-col.yellow h4{background:linear-gradient(135deg,#fef3c7,#fde68a);color:#78350f}
+.traffic-col.red h4{background:linear-gradient(135deg,#fee2e2,#fecaca);color:#991b1b}
+.traffic-item{background:#fff;padding:12px;border:2px solid var(--border);border-radius:8px;margin-bottom:8px;cursor:pointer;user-select:none;transition:all .2s;font-size:13px;display:flex;align-items:center;gap:10px;min-height:48px}
+.traffic-item:hover{border-color:var(--accent);background:#eff6ff}
+.traffic-item.selected{border-color:var(--warning);background:#fef3c7;box-shadow:0 0 0 3px rgba(245,158,11,.3)}
+.traffic-item.correct{border-color:var(--success);background:#dcfce7}
+.traffic-item.incorrect{border-color:var(--danger);background:#fee2e2}
+.sort-container{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #93c5fd;border-radius:14px;padding:20px;margin:16px 0}
+.sort-bank{min-height:80px;padding:12px;background:#fff;border:2px dashed var(--border);border-radius:10px;margin-bottom:20px}
+.sort-bank-title{font-weight:600;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sort-slots{display:flex;flex-direction:column;gap:10px}
+.sort-slot{background:#fff;border:2px dashed var(--border);border-radius:10px;padding:12px;min-height:56px;display:flex;align-items:center;gap:12px;transition:all .2s;cursor:pointer}
+.sort-slot:hover{border-color:var(--accent);background:#eff6ff}
+.sort-slot.filled{border-style:solid;border-color:var(--accent);background:#eff6ff;cursor:pointer}
+.sort-slot.filled:hover{border-color:var(--danger);background:#fee2e2}
+.sort-slot.correct-pos{border-color:var(--success);background:#dcfce7}
+.sort-slot.incorrect-pos{border-color:var(--danger);background:#fee2e2}
+.sort-slot-number{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0}
+.sort-slot.filled .sort-slot-number{background:var(--accent)}
+.sort-slot-placeholder{color:var(--text-muted);font-size:14px;font-style:italic;flex:1}
+.sort-slot-content{flex:1;font-size:14px;font-weight:500;color:var(--text)}
+.sort-slot-remove{background:var(--danger);color:#fff;border:none;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;font-weight:700;flex-shrink:0}
+.sort-slot-remove:hover{background:#991b1b}
+.tap-instruction{background:linear-gradient(135deg,#fef3c7,#fde68a);border:2px solid #fbbf24;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;font-size:14px;color:#78350f}
+.tap-instruction-icon{font-size:24px;flex-shrink:0}
+.tap-instruction strong{color:#78350f}
+.route-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0}
+.route-step{background:#fff;border:2px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:all .2s;cursor:pointer;position:relative}
+.route-step:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.08);border-color:var(--accent)}
+.route-step.active{border-color:var(--warning);box-shadow:0 0 0 3px rgba(245,158,11,.3)}
+.route-step.completed{border-color:var(--success);background:#dcfce7}
+.route-step-icon{font-size:32px;margin-bottom:6px}
+.route-step-title{font-weight:700;color:var(--primary);font-size:13px;margin-bottom:4px}
+.route-step-num{position:absolute;top:-8px;right:-8px;background:var(--accent);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.route-step.completed .route-step-num{background:var(--success)}
+.route-details{background:#fff;border:2px dashed var(--border);border-radius:12px;padding:20px;margin-top:16px;min-height:120px;transition:all .3s}
+.route-details.active{border-style:solid;border-color:var(--accent)}
+.route-details h4{color:var(--primary);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.route-details p{font-size:14px;color:var(--text);margin-bottom:10px}
+.route-details ul{list-style:none;padding:0}
+.route-details ul li{padding:6px 0 6px 24px;position:relative;font-size:14px;border-bottom:1px solid var(--border)}
+.route-details ul li::before{content:'📌';position:absolute;left:0;top:6px}
+.route-details ul li:last-child{border-bottom:none}
+/* НОВИЙ СВІТЛОФОР */
+.traffic-light-scheme{background:linear-gradient(135deg,#1e293b,#334155);border-radius:20px;padding:24px;margin:20px 0;box-shadow:0 8px 24px rgba(30,58,138,.2);position:relative}
+.traffic-light-scheme::before{content:'🚦';position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#fff;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.traffic-light-title{text-align:center;color:#fff;font-weight:700;font-size:17px;margin-bottom:20px;margin-top:8px}
+.traffic-lights-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.traffic-lamp{background:rgba(255,255,255,.08);border-radius:14px;padding:16px;text-align:center;transition:all .3s;cursor:pointer;backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,.1)}
+.traffic-lamp:hover{transform:translateY(-4px);background:rgba(255,255,255,.15)}
+.traffic-lamp.active{transform:translateY(-4px)}
+.lamp-circle{width:70px;height:70px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:32px;position:relative;transition:all .3s;box-shadow:inset 0 -4px 8px rgba(0,0,0,.2)}
+.lamp-circle::after{content:'';position:absolute;top:15%;left:20%;width:30%;height:30%;background:rgba(255,255,255,.4);border-radius:50%;filter:blur(3px)}
+.lamp-green .lamp-circle{background:radial-gradient(circle at 30% 30%,#86efac,#16a34a);box-shadow:0 0 20px rgba(22,163,74,.5),inset 0 -4px 8px rgba(0,0,0,.2)}
+.lamp-yellow .lamp-circle{background:radial-gradient(circle at 30% 30%,#fde68a,#f59e0b);box-shadow:0 0 20px rgba(245,158,11,.5),inset 0 -4px 8px rgba(0,0,0,.2)}
+.lamp-red .lamp-circle{background:radial-gradient(circle at 30% 30%,#fecaca,#dc2626);box-shadow:0 0 20px rgba(220,38,38,.5),inset 0 -4px 8px rgba(0,0,0,.2)}
+.lamp-title{color:#fff;font-weight:700;font-size:14px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.lamp-green .lamp-title{color:#86efac}
+.lamp-yellow .lamp-title{color:#fde68a}
+.lamp-red .lamp-title{color:#fecaca}
+.lamp-subtitle{color:rgba(255,255,255,.7);font-size:12px;font-style:italic;margin-bottom:10px;min-height:32px}
+.lamp-details{background:rgba(0,0,0,.3);border-radius:10px;padding:12px;margin-top:10px;text-align:left;max-height:0;overflow:hidden;transition:max-height .4s ease-out,padding .3s;padding:0 12px}
+.traffic-lamp.active .lamp-details{max-height:400px;padding:12px}
+.lamp-details ul{list-style:none;padding:0;margin:0}
+.lamp-details ul li{color:rgba(255,255,255,.9);font-size:12px;padding:6px 0 6px 20px;position:relative;border-bottom:1px solid rgba(255,255,255,.1)}
+.lamp-details ul li:last-child{border-bottom:none}
+.lamp-details ul li::before{content:'•';position:absolute;left:4px;top:6px;font-weight:700;font-size:16px}
+.lamp-green .lamp-details ul li::before{color:#86efac}
+.lamp-yellow .lamp-details ul li::before{color:#fde68a}
+.lamp-red .lamp-details ul li::before{color:#fecaca}
+.lamp-hint{font-size:11px;color:rgba(255,255,255,.5);margin-top:8px;font-style:italic}
+/* НОВЕ ОФОРМЛЕННЯ ПРАВДА/УЯВЛЕННЯ */
+.myth-fact-grid{display:grid;gap:16px;margin:16px 0}
+.myth-fact-card{background:#fff;border:2px solid var(--border);border-radius:14px;padding:20px;transition:all .3s;position:relative;overflow:hidden}
+.myth-fact-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--border);transition:background .3s}
+.myth-fact-card.correct-answer::before{background:var(--success)}
+.myth-fact-card.incorrect-answer::before{background:var(--danger)}
+.myth-fact-card:hover:not(.answered){border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.myth-fact-card.answered{cursor:default}
+.myth-fact-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.myth-fact-number{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--primary));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0}
+.myth-fact-text{font-size:15px;font-weight:600;color:var(--text);line-height:1.5;flex:1}
+.myth-fact-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.mf-btn{padding:12px;border-radius:10px;border:2px solid var(--border);background:#fff;cursor:pointer;transition:all .2s;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px}
+.mf-btn:hover:not(.disabled){transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.mf-btn-truth{color:#166534}
+.mf-btn-truth:hover:not(.disabled){border-color:var(--success);background:#dcfce7}
+.mf-btn-myth{color:#991b1b}
+.mf-btn-myth:hover:not(.disabled){border-color:var(--danger);background:#fee2e2}
+.mf-btn.selected-truth{border-color:var(--success);background:#dcfce7;color:#166534}
+.mf-btn.selected-myth{border-color:var(--danger);background:#fee2e2;color:#991b1b}
+.mf-btn.correct{border-color:var(--success);background:#dcfce7;color:#166534}
+.mf-btn.incorrect{border-color:var(--danger);background:#fee2e2;color:#991b1b}
+.mf-btn.disabled{cursor:default;opacity:.7}
+.mf-btn-icon{font-size:20px}
+.myth-fact-result{margin-top:12px;padding:10px;border-radius:8px;font-size:13px;font-weight:600;display:none}
+.myth-fact-result.show{display:block}
+.myth-fact-result.correct{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.myth-fact-result.incorrect{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+@media(max-width:968px){
+.hero-unified{grid-template-columns:1fr}
+.hero-illustration{border-bottom:2px dashed var(--accent);min-height:300px}
+.info-blocks{grid-template-columns:1fr}
+.progress-widget{display:none!important}
+.situation-layout{grid-template-columns:1fr}
+.traffic-grid{grid-template-columns:1fr}
+.question-highlight-text{font-size:17px}
+.question-highlight-icon{font-size:40px}
+.traffic-lights-row{grid-template-columns:1fr;gap:12px}
+.lamp-circle{width:60px;height:60px;font-size:28px}
+}
+@media(max-width:768px){
+.header{padding:16px;border-radius:0 0 12px 12px}
+.header h1{font-size:16px}
+.header-buttons .btn{padding:10px 12px;font-size:14px}
+.container{padding:20px 16px}
+.card{padding:20px}
+.navigation .btn{width:100%;min-width:100%}
+.task-options{grid-template-columns:1fr!important}
+.accordion-header{padding:14px 16px;font-size:14px}
+.accordion-body{padding:14px 16px}
+.traffic-item{padding:10px;font-size:12px}
+.sort-slot{padding:10px}
+.sort-slot-number{width:32px;height:32px;font-size:14px}
+.tap-instruction{font-size:13px;padding:10px 12px}
+.myth-fact-card{padding:16px}
+.myth-fact-text{font-size:14px}
+.mf-btn{padding:10px;font-size:13px}
+}
+@media(max-width:480px){
+.step-title{font-size:18px}
+.card h2{font-size:18px}
+.option{padding:12px;font-size:13px}
+.question-highlight{padding:16px}
+.question-highlight-text{font-size:16px}
+.accordion-header{padding:12px 14px;font-size:13px}
+.accordion-body{padding:12px 14px}
+.accordion-icon{font-size:16px}
+.myth-fact-buttons{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="top-progress-bar"><div class="top-progress-fill" id="topProgressBar"></div></div>
+<div class="progress-widget" id="progressWidget" onclick="showProgressModal()" tabindex="0" role="button" aria-label="Прогрес">
+<div class="progress-widget-header"><span class="progress-widget-title">📊 Прогрес</span><span class="progress-widget-percentage" id="widgetPercentage">0%</span></div>
+<div style="font-size:10px;color:var(--text-muted);margin-bottom:6px">Виконано: <strong id="widgetTasks">0/12</strong></div>
+<div class="progress-widget-mini-map" id="widgetMiniMap"></div>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+<header class="header">
+<div class="header-content">
+<h1 id="headerTitle">💙 § 31. Доброчинність</h1>
+<div class="header-buttons">
+<button class="btn btn-secondary" onclick="goToMainPage()">← До змісту</button>
+<button class="btn btn-secondary" onclick="showProgressModal()">📊 Прогрес</button>
+<button class="btn btn-secondary" onclick="showHelpModal()">❓ Як працювати?</button>
+</div>
+</div>
+</header>
+
+<!-- ГОЛОВНА -->
+<main class="container hidden" id="mainPage">
+<div class="hero-unified">
+<div class="hero-illustration">
+<div class="hero-illustration-title">💙 § 31. Доброчинність</div>
+<img src="https://res.cloudinary.com/dmydvhkzr/image/upload/v1793368152/31-1_kjqpmp.png" alt="Доброчинність">
+<p class="situation-caption">Доброчинність — це добровільна допомога іншим без очікування винагороди. Вона починається з небайдужості та поваги до гідності людини.</p>
+</div>
+<div class="hero-navigation">
+<h2>🧭 Навігація по кроках</h2>
+<div class="step-navigation" id="stepNavigation"></div>
+<button class="btn btn-primary mt-24" onclick="goToStep(1)" style="width:100%;font-size:17px;padding:14px">🚀 Розпочати параграф →</button>
+</div>
+</div>
+<div class="info-blocks">
+<div class="card" style="margin:0"><h3>🎯 У цьому параграфі ти:</h3>
+<ul class="feature-list">
+<li data-icon="💙">дізнаєшся, що таке доброчинність і чому вона важлива</li>
+<li data-icon="🤝">з'ясуєш, як тактовно підтримувати людей з інвалідністю</li>
+<li data-icon="🐾">навчишся гуманно допомагати тваринам</li>
+<li data-icon="🌱">сплануєш власну доброчинну ініціативу</li>
+<li data-icon="⭐">оціниш свої вміння бути небайдужим</li>
+</ul></div>
+<div class="card" style="margin:0"><h3>📋 Що ти робитимеш?</h3>
+<ul class="feature-list">
+<li data-icon="✅">Обереш критерії для доброчинної акції</li>
+<li data-icon="🔍">Проаналізуєш 4 ситуації допомоги</li>
+<li data-icon="🚦">Розподілиш дії за «світлофором підтримки»</li>
+<li data-icon="🧩">Відновиш порядок 5 кроків відповідальної допомоги</li>
+<li data-icon="🗺️">Сплануєш маршрут доброчинного проєкту</li>
+<li data-icon="⭐">Оціниш свої вміння</li>
+</ul></div>
+</div>
+<div class="tip-card">💡 <strong>Пам'ятай:</strong> Доброчинність починається з небайдужості. Справжня підтримка — це завжди повага до гідності, вибору й самостійності людини.</div>
+</main>
+
+<!-- КРОК 1 -->
+<main class="container hidden" id="step1Page">
+<div class="step-header"><h2 class="step-title">🎯 Крок 1. Стартове завдання</h2></div>
+<section class="card">
+<div class="question-highlight">
+<span class="question-highlight-icon"></span>
+<div class="question-highlight-text">У класі запропонували провести доброчинну акцію. Одні учні хочуть зібрати кошти для лікування людини, інші — допомогти притулку для тварин, а ще інші — прибрати занедбану територію біля школи.</div>
+<div class="question-highlight-sub">За якими критеріями варто ухвалити рішення, щоб допомога була справді корисною?</div>
+</div>
+<div class="situation-layout">
+<div class="situation-illustration-left">
+<img src="https://res.cloudinary.com/dmydvhkzr/image/upload/v1793368146/31-2_yb5ki0.png" alt="Обговорення ініціативи" class="situation-img">
+<p class="situation-caption">Обдуманий вибір — основа відповідальної доброчинності</p>
+</div>
+<div class="situation-content-right">
+<p style="margin:12px 0;color:var(--text-muted);font-style:italic">📌 <strong>Обери три найважливіші критерії для ухвалення рішення:</strong></p>
+<div class="task-options" id="s1t1">
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">🛡️ Переконатися, що допомога буде безпечною та доречною</div></div></div>
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">🤝 Поважати гідність і самостійність тих, кому допомагаємо</div></div></div>
+<div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">📸 Зробити якнайбільше фото для соцмереж</div></div></div>
+<div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">⚡ Обрати найшвидший варіант, не думаючи</div></div></div>
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">🔍 З'ясувати реальні потреби тих, кому допомагаємо</div></div></div>
+<div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">🎁 Передати будь-які речі, що є вдома, не перевіряючи</div></div></div>
+</div>
+<div id="s1t1f" class="feedback" style="display:none"></div>
+<div class="navigation">
+<button class="btn btn-secondary" onclick="goToMainPage()">← До змісту</button>
+<button class="btn btn-primary" onclick="chkStartTask()">✓ Перевірити</button>
+<button class="btn btn-success" onclick="goToStep(2)">Далі: Крок 2 →</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<!-- КРОК 2 -->
+<main class="container hidden" id="step2Page">
+<div class="step-header"><div class="step-header-top"><h2 class="step-title">💙 Крок 2. Що таке доброчинність</h2><span class="step-badge">2 завдання</span></div></div>
+<section class="card" id="s2Theory">
+<h2>📖 Теоретичний блок</h2>
+<div class="theory-compact" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#93c5fd">
+<h4 style="color:#1e40af">💙 Доброчинність</h4>
+<p><strong>Доброчинність</strong> — це добровільна допомога іншим без очікування винагороди. Вона проявляється у турботі, підтримці, участі в добрих справах, волонтерстві або благодійних ініціативах.</p>
+<p>Доброчинність важлива не лише для окремої людини, а й для всього суспільства, бо зміцнює довіру, взаємопідтримку та відповідальність.</p>
+</div>
+<div class="key-point">💡 <strong>Важливо!</strong> Доброчинність починається з уважності до потреб іншої людини. Відповідальна допомога має бути доречною, чистою, безпечною і поважною.</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:20px 0">
+<div style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);padding:16px;border-radius:12px;border-left:4px solid var(--success)">
+<div style="font-size:28px">1️⃣</div>
+<div style="font-weight:700;color:#166534;margin:6px 0">ДІЗНАЙСЯ ПОТРЕБИ</div>
+<div style="font-size:13px;color:var(--text)">Спершу з'ясуй, що справді потрібно людині чи громаді</div>
+</div>
+<div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);padding:16px;border-radius:12px;border-left:4px solid var(--accent)">
+<div style="font-size:28px">2️⃣</div>
+<div style="font-weight:700;color:#1e40af;margin:6px 0">СКЛАДИ СПИСОК</div>
+<div style="font-size:13px;color:var(--text)">Створи чіткий перелік того, що потрібно зібрати</div>
+</div>
+<div style="background:linear-gradient(135deg,#fef3c7,#fde68a);padding:16px;border-radius:12px;border-left:4px solid var(--warning)">
+<div style="font-size:28px">3️⃣</div>
+<div style="font-weight:700;color:#78350f;margin:6px 0">ПЕРЕВІР ЯКІСТЬ</div>
+<div style="font-size:13px;color:var(--text)">Передавай лише чисті, цілі та придатні речі</div>
+</div>
+<div style="background:linear-gradient(135deg,#f3e8ff,#ede9fe);padding:16px;border-radius:12px;border-left:4px solid #a855f7">
+<div style="font-size:28px">4️⃣</div>
+<div style="font-weight:700;color:#6d28d9;margin:6px 0">ПОДЯКУЙ</div>
+<div style="font-size:13px;color:var(--text)">Подякуй учасникам, не розголошуючи особистих даних тих, кому допомагали</div>
+</div>
+</div>
+<div class="navigation"><button class="btn btn-secondary" onclick="goToMainPage()">← До змісту</button><button class="btn btn-primary" onclick="showS2('s2t1')">Далі: Завдання 1 →</button></div>
+</section>
+<section class="card hidden" id="s2t1">
+<h2>🔍 Завдання 1. Аналіз ситуацій допомоги</h2>
+<div class="feedback feedback-warning mb-24">
+<strong>📌 Інструкція:</strong> Для кожної ситуації визнач, чи є допомога доречною та відповідальною.
+</div>
+<div class="accordion-item">
+<div class="accordion-header" onclick="toggleAccordion(this)"><span>📋 Ситуація 1. Однокласниця після хвороби пропустила багато уроків. Учні запропонували допомогу з конспектами, але спершу запитали, чи їй це зручно.</span><span class="accordion-icon">▼</span></div>
+<div class="accordion-content"><div class="accordion-body">
+<div class="task-options" id="s2t1q1">
+<div class="option" data-correct="true" onclick="selRadio(this,'s2t1q1')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">✅ Так, допомога доречна та тактовна</div></div></div>
+<div class="option" data-correct="false" onclick="selRadio(this,'s2t1q1')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">❌ Ні, допомога недоречна</div></div></div>
+</div>
+</div></div></div>
+<div class="accordion-item">
+<div class="accordion-header" onclick="toggleAccordion(this)"><span>📋 Ситуація 2. Клас зібрав речі для родини у складних обставинах. Частина учнів принесла зношений одяг і пошкоджене взуття.</span><span class="accordion-icon">▼</span></div>
+<div class="accordion-content"><div class="accordion-body">
+<div class="task-options" id="s2t1q2">
+<div class="option" data-correct="false" onclick="selRadio(this,'s2t1q2')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">✅ Так, допомога доречна</div></div></div>
+<div class="option" data-correct="true" onclick="selRadio(this,'s2t1q2')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">❌ Ні, потрібен відповідальніший підхід</div></div></div>
+</div>
+</div></div></div>
+<div class="accordion-item">
+<div class="accordion-header" onclick="toggleAccordion(this)"><span>📋 Ситуація 3. Учні звернулися до лікарняного відділення й дізналися, що дітям потрібні книжки та настільні ігри. Зібрані речі вони перевірили: усе мало бути чистим, цілим і відповідати віку дітей.</span><span class="accordion-icon">▼</span></div>
+<div class="accordion-content"><div class="accordion-body">
+<div class="task-options" id="s2t1q3">
+<div class="option" data-correct="true" onclick="selRadio(this,'s2t1q3')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">✅ Так, допомога доречна та відповідальна</div></div></div>
+<div class="option" data-correct="false" onclick="selRadio(this,'s2t1q3')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">❌ Ні, допомога недоречна</div></div></div>
+</div>
+</div></div></div>
+<div class="accordion-item">
+<div class="accordion-header" onclick="toggleAccordion(this)"><span>📋 Ситуація 4. Після передачі допомоги учні хотіли зробити допис. Одні пропонували фото людей без дозволу, інші — показати лише зібрані речі й подякувати учасникам.</span><span class="accordion-icon">▼</span></div>
+<div class="accordion-content"><div class="accordion-body">
+<div class="task-options" id="s2t1q4">
+<div class="option" data-correct="false" onclick="selRadio(this,'s2t1q4')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">✅ Так, можна публікувати фото всіх</div></div></div>
+<div class="option" data-correct="true" onclick="selRadio(this,'s2t1q4')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">❌ Ні, потрібен відповідальніший підхід</div></div></div>
+</div>
+</div></div></div>
+<div id="s2t1f" class="feedback" style="display:none"></div>
+<div class="navigation"><button class="btn btn-secondary" onclick="showS2('s2Theory')">← Назад</button><button class="btn btn-primary" onclick="chkAllRadio('s2t1',{s2t1q1:'✅ Так, допомога доречна та тактовна',s2t1q2:'❌ Ні, потрібен відповідальніший підхід',s2t1q3:'✅ Так, допомога доречна та відповідальна',s2t1q4:'❌ Ні, потрібен відповідальніший підхід'},'step2_task1')">✓ Завершити</button><button class="btn btn-success" onclick="showS2('s2t2')">Далі →</button></div>
+</section>
+<section class="card hidden" id="s2t2">
+<h2>✅❌ Завдання 2. Доброчинність: правда чи уявлення?</h2>
+<div class="feedback feedback-warning mb-24"><strong>📌 Інструкція:</strong> Для кожного твердження обери — це правда чи уявлення. Після вибору ти одразу побачиш результат.</div>
+<div class="myth-fact-grid" id="mfGrid">
+<div class="myth-fact-card" data-id="mf1" data-correct="truth">
+<div class="myth-fact-header">
+<div class="myth-fact-number">1</div>
+<div class="myth-fact-text">Доброчинна допомога має бути доречною, чистою, безпечною і поважною.</div>
+</div>
+<div class="myth-fact-buttons">
+<button class="mf-btn mf-btn-truth" onclick="mfSelect('mf1','truth',this)" tabindex="0"><span class="mf-btn-icon">✅</span><span>ПРАВДА</span></button>
+<button class="mf-btn mf-btn-myth" onclick="mfSelect('mf1','myth',this)" tabindex="0"><span class="mf-btn-icon">❌</span><span>УЯВЛЕННЯ</span></button>
+</div>
+<div class="myth-fact-result" id="mf1-result"></div>
+</div>
+<div class="myth-fact-card" data-id="mf2" data-correct="myth">
+<div class="myth-fact-header">
+<div class="myth-fact-number">2</div>
+<div class="myth-fact-text">Можна розголошувати особисту інформацію людей, яким допомагають, щоб зібрати більше коштів.</div>
+</div>
+<div class="myth-fact-buttons">
+<button class="mf-btn mf-btn-truth" onclick="mfSelect('mf2','truth',this)" tabindex="0"><span class="mf-btn-icon">✅</span><span>ПРАВДА</span></button>
+<button class="mf-btn mf-btn-myth" onclick="mfSelect('mf2','myth',this)" tabindex="0"><span class="mf-btn-icon">❌</span><span>УЯВЛЕННЯ</span></button>
+</div>
+<div class="myth-fact-result" id="mf2-result"></div>
+</div>
+<div class="myth-fact-card" data-id="mf3" data-correct="truth">
+<div class="myth-fact-header">
+<div class="myth-fact-number">3</div>
+<div class="myth-fact-text">Перед тим, як допомагати, важливо з'ясувати реальні потреби тих, кому ти хочеш допомогти.</div>
+</div>
+<div class="myth-fact-buttons">
+<button class="mf-btn mf-btn-truth" onclick="mfSelect('mf3','truth',this)" tabindex="0"><span class="mf-btn-icon">✅</span><span>ПРАВДА</span></button>
+<button class="mf-btn mf-btn-myth" onclick="mfSelect('mf3','myth',this)" tabindex="0"><span class="mf-btn-icon">❌</span><span>УЯВЛЕННЯ</span></button>
+</div>
+<div class="myth-fact-result" id="mf3-result"></div>
+</div>
+</div>
+<div id="s2t2f" class="feedback" style="display:none"></div>
+<div class="navigation"><button class="btn btn-secondary" onclick="showS2('s2t1')">← Назад</button><button class="btn btn-primary" onclick="chkMythFact()">✓ Завершити завдання</button><button class="btn btn-success" onclick="goToStep(3)">Далі: Крок 3 →</button></div>
+</section>
+</main>
+
+<!-- КРОК 3 -->
+<main class="container hidden" id="step3Page">
+<div class="step-header"><div class="step-header-top"><h2 class="step-title">🤝 Крок 3. Тактовна підтримка</h2><span class="step-badge">2 завдання</span></div></div>
+<section class="card" id="s3Theory">
+<h2>📖 Теоретичний блок</h2>
+<div class="theory-compact" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border-color:#86efac">
+<h4 style="color:#166534">🤝 Тактовна підтримка</h4>
+<p>Не всі люди мають однакові можливості навчатися, пересуватися чи отримувати інформацію. Часто цьому заважають не стан здоров'я, а недоступний простір і упереджене ставлення.</p>
+<p><strong>Тактовна підтримка</strong> починається із запитання: «Чи потрібна вам допомога?» Важливо діяти лише за згодою та поважати вибір і самостійність людини.</p>
+</div>
+<div class="key-point">💡 <strong>Запам'ятай!</strong> Справжня підтримка починається з поваги до гідності, вибору й самостійності людини.</div>
+
+<!-- НОВИЙ СХЕМАТИЧНИЙ СВІТЛОФОР -->
+<h3 style="margin:24px 0 16px;color:var(--primary);display:flex;align-items:center;gap:10px">🚦 Світлофор тактовної підтримки</h3>
+<p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;text-align:center;font-style:italic">👆 Натисни на будь-який ліхтар, щоб побачити деталі</p>
+<div class="traffic-light-scheme">
+<div class="traffic-light-title">Обери правильну поведінку під час підтримки</div>
+<div class="traffic-lights-row">
+<div class="traffic-lamp lamp-green" onclick="toggleLamp(this)" tabindex="0" role="button" aria-label="Зелений світлофор">
+<div class="lamp-circle">🟢</div>
+<div class="lamp-title">Зелений</div>
+<div class="lamp-subtitle">Допомагай</div>
+<div class="lamp-details">
+<ul>
+<li>Запитай: «Чи потрібна тобі допомога?»</li>
+<li>Уточни, як саме буде зручно</li>
+<li>Дій спокійно та за згодою людини</li>
+<li>Поважай вибір і самостійність</li>
+</ul>
+<div class="lamp-hint">✓ Це прояв поваги до гідності</div>
+</div>
+</div>
+<div class="traffic-lamp lamp-yellow" onclick="toggleLamp(this)" tabindex="0" role="button" aria-label="Жовтий світлофор">
+<div class="lamp-circle">🟡</div>
+<div class="lamp-title">Жовтий</div>
+<div class="lamp-subtitle">Зупинись і подумай</div>
+<div class="lamp-details">
+<ul>
+<li>Чи справді потрібна моя допомога?</li>
+<li>Чи не позбавляю я людину самостійності?</li>
+<li>Чи не роблю я послугу «замість» неї?</li>
+<li>Чи запитав(ла) я про згоду?</li>
+</ul>
+<div class="lamp-hint">⚠️ Подумай перед дією</div>
+</div>
+</div>
+<div class="traffic-lamp lamp-red" onclick="toggleLamp(this)" tabindex="0" role="button" aria-label="Червоний світлофор">
+<div class="lamp-circle">🔴</div>
+<div class="lamp-title">Червоний</div>
+<div class="lamp-subtitle">Так не можна</div>
+<div class="lamp-details">
+<ul>
+<li>Жаліти людину</li>
+<li>Торкатися без дозволу</li>
+<li>Говорити замість людини</li>
+<li>Фотографувати без згоди</li>
+<li>Робити з допомоги «виставу»</li>
+</ul>
+<div class="lamp-hint">🚫 Це принижує гідність</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="navigation"><button class="btn btn-secondary" onclick="goToMainPage()">← До змісту</button><button class="btn btn-primary" onclick="showS3('s3t1')">Далі: Завдання 1 →</button></div>
+</section>
+<section class="card hidden" id="s3t1">
+<h2>🚦 Завдання 1. Світлофор тактовної підтримки</h2>
+<div class="feedback feedback-warning mb-24">
+<strong>📌 Інструкція:</strong> Розподіли дії за кольорами світлофора. Натисни на дію → вона підсвітиться жовтим → натисни на потрібну категорію.
+</div>
+<div class="tap-instruction">
+<div class="tap-instruction-icon">👆</div>
+<div><strong>Як виконувати:</strong><br>
+1️⃣ Натисни на дію у нижньому блоці — вона підсвітиться жовтим.<br>
+2️⃣ Натисни на потрібну категорію світлофора — дія потрапить туди.<br>
+3️⃣ Щоб повернути — натисни на неї в категорії.</div>
+</div>
+<div class="traffic-grid">
+<div class="traffic-col green" data-cat="green" onclick="classifyTrafficTap(this)"><h4>🟢 ЗЕЛЕНИЙ: ДОПОМАГАЙ</h4><div id="trafficGreen"></div></div>
+<div class="traffic-col yellow" data-cat="yellow" onclick="classifyTrafficTap(this)"><h4>🟡 ЖОВТИЙ: ПОДУМАЙ</h4><div id="trafficYellow"></div></div>
+<div class="traffic-col red" data-cat="red" onclick="classifyTrafficTap(this)"><h4>🔴 ЧЕРВОНИЙ: НЕ МОЖНА</h4><div id="trafficRed"></div></div>
+</div>
+<div style="background:#fff;border:2px solid var(--border);border-radius:12px;padding:16px;margin-top:16px">
+<h4 style="color:var(--primary);margin-bottom:12px">📋 Дії (натисни, щоб обрати)</h4>
+<div id="trafficBank"></div>
+</div>
+<div style="text-align:center;margin-top:12px"><button class="budget-reset" onclick="resetTrafficClassify()" style="margin-top:12px;padding:8px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text)">🔄 Почати спочатку</button></div>
+<div id="s3t1f" class="feedback" style="display:none"></div>
+<div class="navigation"><button class="btn btn-secondary" onclick="showS3('s3Theory')">← Назад</button><button class="btn btn-primary" onclick="chkTrafficClassify()">✓ Перевірити</button><button class="btn btn-success" onclick="showS3('s3t2')">Далі →</button></div>
+</section>
+<section class="card hidden" id="s3t2">
+<h2>💬 Завдання 2. Фрази тактовної підтримки</h2>
+<div class="feedback feedback-warning mb-24"><strong>📌 Питання:</strong> Обери всі фрази, які є проявом тактовної підтримки.</div>
+<div class="task-options" id="s3t2">
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">💬 «Як тобі буде зручно?»</div></div></div>
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">💬 «Я можу допомогти, якщо ти не проти»</div></div></div>
+<div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">💬 «Давай я все зроблю за тебе, тобі ж важко»</div></div></div>
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">💬 «Чи потрібна тобі допомога?»</div></div></div>
+<div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">💬 «Бідненький, як ти мучишся...»</div></div></div>
+<div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">💬 Зробити фото людини без дозволу для соцмереж</div></div></div>
+</div>
+<div id="s3t2f" class="feedback" style="display:none"></div>
+<div class="navigation"><button class="btn btn-secondary" onclick="showS3('s3t1')">← Назад</button><button class="btn btn-primary" onclick="chkMulti('s3t2','s3t2f',3,'step3_task2')">✓ Перевірити</button><button class="btn btn-success" onclick="goToStep(4)">Далі: Крок 4 →</button></div>
+</section>
+</main>
+
+<!-- КРОК 4 -->
+<main class="container hidden" id="step4Page">
+<div class="step-header"><div class="step-header-top"><h2 class="step-title">🐾 Крок 4. Гуманне ставлення до живих істот</h2><span class="step-badge">2 завдання</span></div></div>
+<section class="card" id="s4Theory">
+<h2>📖 Теоретичний блок</h2>
+<div class="theory-compact" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);border-color:#f9a8d4">
+<h4 style="color:#be185d">🐾 Гуманне ставлення</h4>
+<p><strong>Гуманне ставлення до живих істот</strong> — це повага до життя, турбота про тварин і відповідальність за довкілля.</p>
+<p>Допомога має бути доречною, безпечною та корисною, тому важливо спочатку оцінити ситуацію, а за потреби звернутися до фахівців.</p>
+</div>
+<h3 style="margin:24px 0 16px;color:var(--primary)">🔄 5 кроків відповідальної допомоги</h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0">
+<div style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);padding:14px;border-radius:12px;border-left:4px solid var(--success);text-align:center">
+<div style="font-size:28px">👀</div>
+<div style="font-weight:700;color:#166534;margin:6px 0;font-size:13px">1. ПОМІТИТИ</div>
+<div style="font-size:12px;color:var(--text)">Будь уважним до живих істот поруч</div>
+</div>
+<div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);padding:14px;border-radius:12px;border-left:4px solid var(--accent);text-align:center">
+<div style="font-size:28px">🧠</div>
+<div style="font-weight:700;color:#1e40af;margin:6px 0;font-size:13px">2. ОЦІНИТИ</div>
+<div style="font-size:12px;color:var(--text)">З'ясуй, яка допомога потрібна і чи буде вона безпечною</div>
+</div>
+<div style="background:linear-gradient(135deg,#fef3c7,#fde68a);padding:14px;border-radius:12px;border-left:4px solid var(--warning);text-align:center">
+<div style="font-size:28px">🤝</div>
+<div style="font-weight:700;color:#78350f;margin:6px 0;font-size:13px">3. ДІЯТИ ДОРЕЧНО</div>
+<div style="font-size:12px;color:var(--text)">Діяти з повагою до потреб і гідності інших</div>
+</div>
+<div style="background:linear-gradient(135deg,#f3e8ff,#ede9fe);padding:14px;border-radius:12px;border-left:4px solid #a855f7;text-align:center">
+<div style="font-size:28px">🔍</div>
+<div style="font-weight:700;color:#6d28d9;margin:6px 0;font-size:13px">4. ПЕРЕВІРИТИ</div>
+<div style="font-size:12px;color:var(--text)">Подбати про наслідки: чи була допомога корисною</div>
+</div>
+<div style="background:linear-gradient(135deg,#fee2e2,#fecaca);padding:14px;border-radius:12px;border-left:4px solid var(--danger);text-align:center">
+<div style="font-size:28px">🌱</div>
+<div style="font-weight:700;color:#991b1b;margin:6px 0;font-size:13px">5. БЕРЕГТИ ДОВКІЛЛЯ</div>
+<div style="font-size:12px;color:var(--text)">Підтримувати добрі справи, не завдаючи шкоди природі</div>
+</div>
+</div>
+<div class="key-point">💡 <strong>Важливо!</strong> Байдужість може зашкодити, а своєчасні дії — захистити життя. За потреби звертайся до фахівців (ветеринарів, екологів).</div>
+<div class="navigation"><button class="btn btn-secondary" onclick="goToMainPage()">← До змісту</button><button class="btn btn-primary" onclick="showS4('s4t1')">Далі: Завдання 1 →</button></div>
+</section>
+<section class="card hidden" id="s4t1">
+<h2>🧩 Завдання 1. Віднови порядок 5 кроків відповідальної допомоги</h2>
+<div class="tap-instruction">
+<div class="tap-instruction-icon">👆</div>
+<div><strong>Як виконувати:</strong><br>
+1️⃣ Натисни на крок у верхньому блоці — він підсвітиться жовтим.<br>
+2️⃣ Натисни на пронумерований слот (1–5) нижче — крок стане на своє місце.<br>
+3️⃣ Щоб повернути крок назад — натисни ✕ у слоті.</div>
+</div>
+<div class="sort-container">
+<div class="sort-bank">
+<div class="sort-bank-title">📦 Кроки відповідальної допомоги (перемішані)</div>
+<div id="sortBank"></div>
+</div>
+<div>
+<div class="sort-bank-title">🎯 Правильний порядок (1 → 5)</div>
+<div class="sort-slots" id="sortSlots"></div>
+</div>
+</div>
+<div style="text-align:center;margin-top:12px"><button class="budget-reset" onclick="resetSort()" style="margin-top:12px;padding:8px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text)">🔄 Перемішати знову</button></div>
+<div id="s4t1f" class="feedback" style="display:none"></div>
+<div class="navigation"><button class="btn btn-secondary" onclick="showS4('s4Theory')">← Назад</button><button class="btn btn-primary" onclick="chkSort()">✓ Перевірити</button><button class="btn btn-success" onclick="showS4('s4t2')">Далі →</button></div>
+</section>
+<section class="card hidden" id="s4t2">
+<h2>🎯 Завдання 2. Ситуація: що робити?</h2>
+<div class="feedback feedback-warning mb-24">
+<strong>📌 Ситуація:</strong> На узбіччі дороги ви побачили поранену тварину.
+</div>
+<div class="situation-layout">
+<div class="situation-illustration-left">
+<img src="https://res.cloudinary.com/dmydvhkzr/image/upload/v1793368146/32-3_jzn8if.png" alt="Поранена тварина" class="situation-img">
+</div>
+<div class="situation-content-right">
+<p style="margin:12px 0;color:var(--text-muted);font-style:italic">🎯 <strong>Які дії будуть найвідповідальнішими?</strong></p>
+<div class="task-options" id="s4t2">
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">📞 Зателефонувати до ветеринарів або волонтерів</div></div></div>
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">🛡️ Забезпечити безпеку собі та тварині</div></div></div>
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">👀 Помітити тварину та оцінити ситуацію</div></div></div>
+<div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">📸 Зробити фото для соцмереж, не допомагаючи</div></div></div>
+<div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">🏃 Пройти повз — це не моя справа</div></div></div>
+</div>
+<div id="s4t2f" class="feedback" style="display:none"></div>
+</div>
+</div>
+<div class="navigation"><button class="btn btn-secondary" onclick="showS4('s4t1')">← Назад</button><button class="btn btn-primary" onclick="chkMulti('s4t2','s4t2f',3,'step4_task2')">✓ Перевірити</button><button class="btn btn-success" onclick="goToStep(5)">Далі: Крок 5 →</button></div>
+</section>
+</main>
+
+<!-- КРОК 5 -->
+<main class="container hidden" id="step5Page">
+<div class="step-header"><div class="step-header-top"><h2 class="step-title">🌱 Крок 5. Волонтерство та ініціативи</h2><span class="step-badge">2 завдання</span></div></div>
+<section class="card" id="s5Theory">
+<h2>📖 Теоретичний блок</h2>
+<div class="theory-compact" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border-color:#86efac">
+<h4 style="color:#166534">🌱 Волонтерство</h4>
+<p><strong>Волонтерство</strong> — це добровільна допомога людям, тваринам, громаді або довкіллю без винагороди.</p>
+<p>Коли до доброї справи долучаються інші, вона може стати громадською ініціативою. Щоб ідея стала реальною справою, важливо визначити, кому допомогти, що зробити, кого залучити та як діяти відповідально.</p>
+</div>
+<h3 style="margin:24px 0 16px;color:var(--primary)">🗺️ Маршрут із п'яти кроків для доброчинного проєкту</h3>
+<div class="route-steps" id="routeSteps">
+<div class="route-step" data-step="1" onclick="showRoute(1)" tabindex="0" role="button"><div class="route-step-num">1</div><div class="route-step-icon">🔍</div><div class="route-step-title">Поміть потребу</div></div>
+<div class="route-step" data-step="2" onclick="showRoute(2)" tabindex="0" role="button"><div class="route-step-num">2</div><div class="route-step-icon">🎯</div><div class="route-step-title">Обери посильну справу</div></div>
+<div class="route-step" data-step="3" onclick="showRoute(3)" tabindex="0" role="button"><div class="route-step-num">3</div><div class="route-step-icon">🤝</div><div class="route-step-title">Знайди команду</div></div>
+<div class="route-step" data-step="4" onclick="showRoute(4)" tabindex="0" role="button"><div class="route-step-num">4</div><div class="route-step-icon">✅</div><div class="route-step-title">Перевір відповідність</div></div>
+<div class="route-step" data-step="5" onclick="showRoute(5)" tabindex="0" role="button"><div class="route-step-num">5</div><div class="route-step-icon">📊</div><div class="route-step-title">Оціни результат</div></div>
+</div>
+<div class="route-details" id="routeDetails">
+<p style="color:var(--text-muted);font-style:italic;text-align:center">👆 Натисни на будь-який крок маршруту, щоб дізнатися більше</p>
+</div>
+<div class="navigation"><button class="btn btn-secondary" onclick="goToMainPage()">← До змісту</button><button class="btn btn-primary" onclick="showS5('s5t1')">Далі: Завдання 1 →</button></div>
+</section>
+<section class="card hidden" id="s5t1">
+<h2>🗺️ Завдання 1. Сплануй доброчинну ініціативу</h2>
+<div class="feedback feedback-warning mb-24">
+<strong>📌 Ситуація:</strong> Після повені місцевий притулок повідомив, що потребує допомоги. Учні вирішили організувати збір. Одні пропонують одразу збирати корм і речі, інші — спочатку зв'язатися з притулком і уточнити потреби.
+</div>
+<div class="situation-layout">
+<div class="situation-illustration-left">
+<img src="https://res.cloudinary.com/dmydvhkzr/image/upload/v1793368146/32-4_g6x6fm.png" alt="Притулок після повені" class="situation-img">
+</div>
+<div class="situation-content-right">
+<p style="margin:12px 0;color:var(--text-muted);font-style:italic">🎯 <strong>Який підхід найвідповідальніший?</strong></p>
+<div class="task-options" id="s5t1">
+<div class="option" data-correct="false" onclick="selRadio(this,'s5t1')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">⚡ Одразу збирати все, що є вдома</div></div></div>
+<div class="option" data-correct="true" onclick="selRadio(this,'s5t1')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">🔍 Спочатку зв'язатися з притулком і уточнити реальні потреби</div></div></div>
+<div class="option" data-correct="false" onclick="selRadio(this,'s5t1')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">📸 Зробити допис у соцмережах, щоб зібрати лайки</div></div></div>
+<div class="option" data-correct="false" onclick="selRadio(this,'s5t1')" tabindex="0" role="radio"><div class="option-radio"></div><div class="option-text"><div class="option-label">🤷 Нічого не робити — це не наша справа</div></div></div>
+</div>
+<div id="s5t1f" class="feedback" style="display:none"></div>
+</div>
+</div>
+<div class="navigation"><button class="btn btn-secondary" onclick="showS5('s5Theory')">← Назад</button><button class="btn btn-primary" onclick="chkRadio('s5t1','s5t1f','step5_task1')">✓ Перевірити</button><button class="btn btn-success" onclick="showS5('s5t2')">Далі →</button></div>
+</section>
+<section class="card hidden" id="s5t2">
+<h2>🧩 Завдання 2. Віднови правильний порядок маршруту</h2>
+<div class="tap-instruction">
+<div class="tap-instruction-icon">👆</div>
+<div><strong>Як виконувати:</strong><br>
+1️⃣ Натисни на крок у верхньому блоці — він підсвітиться жовтим.<br>
+2️⃣ Натисни на пронумерований слот (1–5) нижче — крок стане на своє місце.<br>
+3️⃣ Щоб повернути крок назад — натисни ✕ у слоті.</div>
+</div>
+<div class="sort-container">
+<div class="sort-bank">
+<div class="sort-bank-title">📦 Кроки маршруту (перемішані)</div>
+<div id="sortBank2"></div>
+</div>
+<div>
+<div class="sort-bank-title">🎯 Правильний порядок (1 → 5)</div>
+<div class="sort-slots" id="sortSlots2"></div>
+</div>
+</div>
+<div style="text-align:center;margin-top:12px"><button class="budget-reset" onclick="resetSort2()" style="margin-top:12px;padding:8px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text)">🔄 Перемішати знову</button></div>
+<div id="s5t2f" class="feedback" style="display:none"></div>
+<div class="navigation"><button class="btn btn-secondary" onclick="showS5('s5t1')">← Назад</button><button class="btn btn-primary" onclick="chkSort2()">✓ Перевірити</button><button class="btn btn-success" onclick="goToStep(6)">Далі: Самооцінювання →</button></div>
+</section>
+</main>
+
+<!-- КРОК 6 -->
+<main class="container hidden" id="step6Page">
+<div class="step6-header"><h2>🎉 Вітаємо! Ти завершив(ла) параграф!</h2><p>Час дізнатися свій рівень</p></div>
+<div class="card"><h2>⭐ Оцініть свої вміння</h2>
+<div class="skill-eval"><div class="skill-title">💙 Я розумію, що таке доброчинність і чому вона важлива</div><div class="star-rating" data-skill="1"><span class="star" onclick="rate(1,1)">★</span><span class="star" onclick="rate(1,2)">★</span><span class="star" onclick="rate(1,3)">★</span><span class="star" onclick="rate(1,4)">★</span><span class="star" onclick="rate(1,5)">★</span></div></div>
+<div class="skill-eval"><div class="skill-title">🤝 Я вмію тактовно підтримувати людей з порушенням здоров'я</div><div class="star-rating" data-skill="2"><span class="star" onclick="rate(2,1)">★</span><span class="star" onclick="rate(2,2)">★</span><span class="star" onclick="rate(2,3)">★</span><span class="star" onclick="rate(2,4)">★</span><span class="star" onclick="rate(2,5)">★</span></div></div>
+<div class="skill-eval"><div class="skill-title">🐾 Я можу гуманно та відповідально допомагати тваринам</div><div class="star-rating" data-skill="3"><span class="star" onclick="rate(3,1)">★</span><span class="star" onclick="rate(3,2)">★</span><span class="star" onclick="rate(3,3)">★</span><span class="star" onclick="rate(3,4)">★</span><span class="star" onclick="rate(3,5)">★</span></div></div>
+<div class="skill-eval"><div class="skill-title">🌱 Я вмію планувати доброчинні ініціативи</div><div class="star-rating" data-skill="4"><span class="star" onclick="rate(4,1)">★</span><span class="star" onclick="rate(4,2)">★</span><span class="star" onclick="rate(4,3)">★</span><span class="star" onclick="rate(4,4)">★</span><span class="star" onclick="rate(4,5)">★</span></div></div>
+<div class="skill-eval"><div class="skill-title">⭐ Я помічаю потреби інших і дію відповідально</div><div class="star-rating" data-skill="5"><span class="star" onclick="rate(5,1)">★</span><span class="star" onclick="rate(5,2)">★</span><span class="star" onclick="rate(5,3)">★</span><span class="star" onclick="rate(5,4)">★</span><span class="star" onclick="rate(5,5)">★</span></div></div>
+</div>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-value" id="statTasks">0/12</div><div class="stat-label">✅ Виконано</div></div>
+<div class="stat-card"><div class="stat-value" id="statCorrect">0</div><div class="stat-label">🎯 Правильних</div></div>
+<div class="stat-card"><div class="stat-value" id="statSteps">0/5</div><div class="stat-label">📍 Кроків</div></div>
+<div class="stat-card"><div class="stat-value" id="statAccuracy">0%</div><div class="stat-label">🏅 Точність</div></div>
+</div>
+<div class="progress-circle-container"><div class="progress-circle" id="progressCircle"><div class="progress-circle-inner"><div class="circle-percentage" id="circlePercentage">0%</div><div class="circle-label">Прогрес</div></div></div></div>
+<div style="text-align:center"><div class="level-badge"><div class="level-badge-icon">⭐</div><div><div class="level-badge-title" id="finalLevelTitle">Початківець</div><div class="level-badge-desc" id="finalLevelDesc">⭐☆☆☆☆</div></div></div></div>
+<div class="tip-card">💡 <strong>Доброчинність — це щоденна відповідальність.</strong><br>🌱 Навіть невелика добра справа може започаткувати важливі зміни. Помічайте потреби інших, дійте відповідально!</div>
+<div class="navigation"><button class="btn btn-warning" onclick="resetProgress()">🔄 Пройти ще раз</button><button class="btn btn-primary" onclick="goToMainPage()">🏠 На головну</button></div>
+</main>
+
+<!-- МОДАЛКИ -->
+<div class="modal-overlay" id="progressModal" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+<div class="modal"><div class="modal-header"><h2 id="pTitle">📊 Мій прогрес</h2><button class="modal-close" onclick="closeModal('progressModal')" aria-label="Закрити">✕</button></div>
+<div class="text-center"><div style="font-size:48px;margin-bottom:16px" id="mEmoji">⭐☆☆☆☆</div><h3 style="color:var(--primary);margin-bottom:24px" id="mName">Початківець</h3>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px">
+<div style="background:var(--bg);padding:14px;border-radius:12px"><div style="font-size:24px;font-weight:700;color:var(--accent)" id="mT">0/12</div><div style="font-size:12px;color:var(--text-muted)">Завдань</div></div>
+<div style="background:var(--bg);padding:14px;border-radius:12px"><div style="font-size:24px;font-weight:700;color:var(--success)" id="mC">0</div><div style="font-size:12px;color:var(--text-muted)">Правильних</div></div>
+<div style="background:var(--bg);padding:14px;border-radius:12px"><div style="font-size:24px;font-weight:700;color:var(--warning)" id="mS">0/5</div><div style="font-size:12px;color:var(--text-muted)">Кроків</div></div>
+<div style="background:var(--bg);padding:14px;border-radius:12px"><div style="font-size:24px;font-weight:700;color:var(--primary)" id="mA">0%</div><div style="font-size:12px;color:var(--text-muted)">Точність</div></div>
+</div>
+<div style="background:var(--border);height:12px;border-radius:6px;overflow:hidden;margin-bottom:12px"><div id="mBar" style="height:100%;background:linear-gradient(90deg,var(--accent),var(--success));width:0%;transition:width .5s"></div></div>
+<p style="font-weight:600;color:var(--primary)">Прогрес: <span id="mP">0%</span></p></div></div></div>
+<div class="modal-overlay" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="hTitle">
+<div class="modal"><div class="modal-header"><h2 id="hTitle">❓ Як працювати</h2><button class="modal-close" onclick="closeModal('helpModal')" aria-label="Закрити">✕</button></div>
+<div class="feature-list">
+<div data-icon="🚀" style="padding:10px 0 10px 32px;position:relative;border-bottom:1px solid var(--border)"><strong>Як почати?</strong><br>Натисни «Розпочати параграф».</div>
+<div data-icon="✅" style="padding:10px 0 10px 32px;position:relative;border-bottom:1px solid var(--border)"><strong>Форми завдань:</strong><br>Тести, tap-to-tap, класифікація, зіставлення, акордеон, правда/уявлення, сортування, симулятор проєкту.</div>
+<div data-icon="📱" style="padding:10px 0 10px 32px;position:relative;border-bottom:1px solid var(--border)"><strong>На телефоні:</strong><br>Усі перетягування працюють через прості натискання — обери елемент, потім обери місце.</div>
+<div data-icon="🏆" style="padding:10px 0 10px 32px;position:relative"><strong>Прогрес:</strong><br>Натисни на віджет прогресу для перегляду статистики.</div>
+</div>
+<button class="btn btn-primary mt-24" onclick="closeModal('helpModal')" style="width:100%">Зрозуміло!</button></div></div>
+
+<script>
+var TOTAL_TASKS = 12;
+var ST = {
+step1: {t:1, c:0, tasks:{task1:0}},
+step2: {t:2, c:0, tasks:{task1:0, task2:0}},
+step3: {t:2, c:0, tasks:{task1:0, task2:0}},
+step4: {t:2, c:0, tasks:{task1:0, task2:0}},
+step5: {t:2, c:0, tasks:{task1:0, task2:0}}
+};
+var SC = {1:0, 2:0, 3:0, 4:0, 5:0};
+var PT = {c:0, t:TOTAL_TASKS, a:[]};
+var state = {cs:0, sr:[0,0,0,0,0]};
+var mfState = {};
+
+function addC(id) {
+if (PT.a.indexOf(id) !== -1) return;
+PT.a.push(id);
+PT.c++;
+updST(id);
+updLive();
+saveP();
+}
+function updST(id) {
+var match = id.match(/step(\d+)_(task\d+[a-z]?)/);
+if (!match) return;
+var stepNum = parseInt(match[1]);
+var taskName = match[2];
+var stepKey = "step" + stepNum;
+var s = ST[stepKey];
+if (s && s.tasks.hasOwnProperty(taskName)) {
+s.tasks[taskName] = 1;
+s.c = 0;
+for (var k in s.tasks) { if (s.tasks[k]) s.c++; }
+if (s.c === s.t && !SC[stepNum]) {
+SC[stepNum] = 1;
+showToast("Крок " + stepNum + " завершено!", "🏆");
+}
+}
+updS6();
+}
+function updLive() {
+try {
+var c = 0;
+for (var i = 1; i <= 5; i++) c += ST["step" + i].c;
+var p = Math.min(100, Math.round(c / TOTAL_TASKS * 100));
+var b = document.getElementById("topProgressBar");
+if (b) b.style.width = p + "%";
+var wp = document.getElementById("widgetPercentage");
+if (wp) wp.textContent = p + "%";
+var wt = document.getElementById("widgetTasks");
+if (wt) wt.textContent = c + "/" + TOTAL_TASKS;
+updateWidgetMiniMap();
+renderNav();
+updS6();
+} catch (err) { console.error("Error:", err); }
+}
+function updateWidgetMiniMap() {
+var wb = document.getElementById("widgetMiniMap");
+if (!wb) return;
+wb.innerHTML = "";
+for (var i = 1; i <= 5; i++) {
+var dot = document.createElement("div");
+dot.className = "mini-step";
+if (SC[i]) dot.classList.add("completed");
+else if (i === state.cs) dot.classList.add("current");
+dot.textContent = i;
+wb.appendChild(dot);
+}
+}
+function saveP() {
+try {
+sessionStorage.setItem("s31v1", JSON.stringify({
+PT: {c: PT.c, t: TOTAL_TASKS, a: PT.a},
+ST: ST, SC: SC, state: state
+}));
+} catch (err) { console.error("Error saving:", err); }
+}
+function loadP() {
+try {
+var s = localStorage.getItem("s31v1");
+if (s) {
+var d = JSON.parse(s);
+if (d.PT) { PT.c = d.PT.c || 0; PT.a = d.PT.a || []; }
+if (d.ST) {
+for (var i = 1; i <= 5; i++) {
+if (d.ST["step" + i]) {
+ST["step" + i].c = d.ST["step" + i].c || 0;
+ST["step" + i].tasks = d.ST["step" + i].tasks || ST["step" + i].tasks;
+}
+}
+}
+if (d.SC) { for (var j = 1; j <= 5; j++) SC[j] = d.SC[j] || 0; }
+if (d.state) {
+state.cs = d.state.cs || 0;
+state.sr = d.state.sr || [0,0,0,0,0];
+while (state.sr.length < 5) state.sr.push(0);
+}
+}
+} catch (err) { console.error("Error loading:", err); }
+updLive();
+renderNav();
+}
+var steps = [
+{id:1, icon:"🎯", title:"Стартове завдання", tasks:1},
+{id:2, icon:"💙", title:"Що таке доброчинність", tasks:2},
+{id:3, icon:"🤝", title:"Тактовна підтримка", tasks:2},
+{id:4, icon:"🐾", title:"Гуманне ставлення", tasks:2},
+{id:5, icon:"🌱", title:"Волонтерство", tasks:2},
+{id:6, icon:"🏆", title:"Самооцінювання", tasks:0}
+];
+function renderNav() {
+var n = document.getElementById("stepNavigation");
+if (!n) return;
+n.innerHTML = "";
+for (var i = 0; i < steps.length; i++) {
+var s = steps[i];
+var d = document.createElement("div");
+d.className = "step-nav-item";
+var td = s.tasks > 0 ? ST["step" + s.id].c : 0;
+var ic = s.tasks > 0 && SC[s.id];
+if (s.id === 6 && SC[5]) d.classList.add("completed");
+else if (ic) d.classList.add("completed");
+else if (i === state.cs - 1) d.classList.add("active");
+d.innerHTML = '<div class="step-nav-number">' + (ic ? "✓" : (i+1)) + '</div><div class="step-nav-content"><div class="step-nav-title">' + s.icon + " " + s.title + '</div><div class="step-nav-status">' + (s.tasks > 0 ? td + "/" + s.tasks + " завдань" : "Фінал") + '</div></div>';
+d.setAttribute("tabindex", "0");
+d.setAttribute("role", "button");
+(function(idx) {
+d.onclick = function() { goToStep(idx + 1); };
+d.onkeydown = function(e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goToStep(idx + 1); } };
+})(i);
+n.appendChild(d);
+}
+}
+function updS6() {
+var c = 0;
+for (var i = 1; i <= 5; i++) c += ST["step" + i].c;
+var p = Math.min(100, Math.round(c / TOTAL_TASKS * 100));
+var ac = PT.t > 0 ? Math.round(PT.c / PT.t * 100) : 0;
+var cs = 0;
+for (var j = 1; j <= 5; j++) { if (SC[j]) cs++; }
+var e = function(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+e("statTasks", c + "/" + TOTAL_TASKS);
+e("statCorrect", PT.c);
+e("statSteps", cs + "/5");
+e("statAccuracy", ac + "%");
+var ci = document.getElementById("progressCircle");
+if (ci) ci.style.background = "conic-gradient(var(--success) " + p + "%,var(--bg) " + p + "%)";
+var cp = document.getElementById("circlePercentage");
+if (cp) cp.textContent = p + "%";
+var l = "Початківець", em = "⭐☆☆☆☆";
+if (p >= 76) { l = "Доброчинний лідер"; em = "⭐⭐⭐⭐⭐"; }
+else if (p >= 51) { l = "Активний волонтер"; em = "⭐⭐⭐☆☆"; }
+else if (p >= 26) { l = "Свідомий учень"; em = "⭐⭐☆☆☆"; }
+e("finalLevelTitle", l);
+e("finalLevelDesc", em);
+for (var k = 0; k < state.sr.length; k++) { if (state.sr[k] > 0) rate(k + 1, state.sr[k]); }
+}
+function hideAll() {
+var pages = ["mainPage","step1Page","step2Page","step3Page","step4Page","step5Page","step6Page"];
+for (var i = 0; i < pages.length; i++) {
+var el = document.getElementById(pages[i]);
+if (el) el.classList.add("hidden");
+}
+}
+function goToMainPage() {
+hideAll();
+document.getElementById("mainPage").classList.remove("hidden");
+document.getElementById("headerTitle").textContent = "💙 § 31. Доброчинність";
+state.cs = 0;
+saveP();
+window.scrollTo({top: 0, behavior: "smooth"});
+}
+function goToStep(n) {
+hideAll();
+var pages = {1:"step1Page",2:"step2Page",3:"step3Page",4:"step4Page",5:"step5Page",6:"step6Page"};
+var el = document.getElementById(pages[n]);
+if (el) {
+el.classList.remove("hidden");
+state.cs = n;
+if (n === 2) showS2("s2Theory");
+if (n === 3) showS3("s3Theory");
+if (n === 4) showS4("s4Theory");
+if (n === 5) showS5("s5Theory");
+if (n === 6) updS6();
+saveP();
+window.scrollTo({top: 0, behavior: "smooth"});
+}
+}
+function showS2(id) {
+["s2Theory","s2t1","s2t2"].forEach(function(s) { var e = document.getElementById(s); if (e) e.classList.add("hidden"); });
+document.getElementById(id).classList.remove("hidden");
+window.scrollTo({top: 0, behavior: "smooth"});
+}
+function showS3(id) {
+["s3Theory","s3t1","s3t2"].forEach(function(s) { var e = document.getElementById(s); if (e) e.classList.add("hidden"); });
+document.getElementById(id).classList.remove("hidden");
+if (id === "s3t1") initTrafficClassify();
+window.scrollTo({top: 0, behavior: "smooth"});
+}
+function showS4(id) {
+["s4Theory","s4t1","s4t2"].forEach(function(s) { var e = document.getElementById(s); if (e) e.classList.add("hidden"); });
+document.getElementById(id).classList.remove("hidden");
+if (id === "s4t1") initSort();
+window.scrollTo({top: 0, behavior: "smooth"});
+}
+function showS5(id) {
+["s5Theory","s5t1","s5t2"].forEach(function(s) { var e = document.getElementById(s); if (e) e.classList.add("hidden"); });
+document.getElementById(id).classList.remove("hidden");
+if (id === "s5t2") initSort2();
+window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+var routeData = {
+1: {title:"🔍 КРОК 1: ПОМІТЬ ПОТРЕБУ", desc:"З'ясуйте, кому або чому потрібна допомога.", items:["Запитайте, що люди, тварини або громада потребують найбільше","Не робіть припущень — дізнайтеся реальні потреби","Будьте уважними до оточення"]},
+2: {title:"🎯 КРОК 2: ОБЕРИ ПОСИЛЬНУ СПРАВУ", desc:"Вирішіть, що саме ваш клас реально може зробити.", items:["Оберіть посильну й безпечну дію","Сплануйте, що потрібно","Визначте ресурси та час"]},
+3: {title:"🤝 КРОК 3: ЗНАЙДИ КОМАНДУ", desc:"Знайдіть однодумців серед однокласників, учителів, батьків.", items:["Залучіть партнерів у громаді","Разом діяти легше й ефективніше","Розподіліть обов'язки"]},
+4: {title:"✅ КРОК 4: ПЕРЕВІР ВІДПОВІДНІСТЬ", desc:"Переконайтеся, що ваша допомога буде доречною.", items:["Допомога має бути безпечною","Не зашкодить нікому","Уточніть усі деталі"]},
+5: {title:"📊 КРОК 5: ОЦІНИ РЕЗУЛЬТАТ", desc:"Оцініть, що вдалося зробити, що змінилося.", items:["Поділіться результатами","Чого ви навчилися","Плануйте нові добрі справи!"]}
+};
+function showRoute(num) {
+var stepsEl = document.querySelectorAll(".route-step");
+for (var i = 0; i < stepsEl.length; i++) stepsEl[i].classList.remove("active");
+var data = routeData[num];
+var details = document.getElementById("routeDetails");
+var html = '<h4>' + data.title + '</h4><p>' + data.desc + '</p><ul>';
+for (var j = 0; j < data.items.length; j++) html += '<li>' + data.items[j] + '</li>';
+html += '</ul>';
+details.innerHTML = html;
+details.classList.add("active");
+var activeStep = document.querySelector('.route-step[data-step="' + num + '"]');
+if (activeStep) activeStep.classList.add("active");
+}
+
+// НОВИЙ СВІТЛОФОР - перемикання
+function toggleLamp(el) {
+var wasActive = el.classList.contains("active");
+var allLamps = document.querySelectorAll(".traffic-lamp");
+for (var i = 0; i < allLamps.length; i++) allLamps[i].classList.remove("active");
+if (!wasActive) el.classList.add("active");
+}
+
+// НОВЕ ОФОРМЛЕННЯ ПРАВДА/УЯВЛЕННЯ
+function mfSelect(id, value, btn) {
+var card = document.querySelector('.myth-fact-card[data-id="' + id + '"]');
+if (card.classList.contains("answered")) return;
+var correct = card.dataset.correct;
+var buttons = card.querySelectorAll(".mf-btn");
+for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove("selected-truth","selected-myth","correct","incorrect");
+btn.classList.add(value === "truth" ? "selected-truth" : "selected-myth");
+var resultEl = document.getElementById(id + "-result");
+if (value === correct) {
+btn.classList.add("correct");
+card.classList.add("correct-answer");
+resultEl.className = "myth-fact-result show correct";
+resultEl.innerHTML = "✅ Правильно! " + (correct === "truth" ? "Це справді правда." : "Це справді уявлення.");
+} else {
+btn.classList.add("incorrect");
+card.classList.add("incorrect-answer");
+resultEl.className = "myth-fact-result show incorrect";
+resultEl.innerHTML = "❌ Неправильно. " + (correct === "truth" ? "Це правда, а не уявлення." : "Це уявлення, а не правда.");
+// Підказка: показати правильну відповідь
+for (var j = 0; j < buttons.length; j++) {
+var btnValue = buttons[j].classList.contains("mf-btn-truth") ? "truth" : "myth";
+if (btnValue === correct) buttons[j].classList.add("correct");
+}
+}
+for (var k = 0; k < buttons.length; k++) buttons[k].classList.add("disabled");
+card.classList.add("answered");
+mfState[id] = value;
+}
+function chkMythFact() {
+var f = document.getElementById("s2t2f");
+if (!f) return;
+var cards = document.querySelectorAll(".myth-fact-card");
+var answered = 0;
+var correct = 0;
+for (var i = 0; i < cards.length; i++) {
+var id = cards[i].dataset.id;
+if (mfState[id]) {
+answered++;
+if (mfState[id] === cards[i].dataset.correct) correct++;
+}
+}
+f.style.display = "block";
+if (answered < cards.length) {
+f.className = "feedback feedback-warning";
+f.innerHTML = "💡 Відповідай на всі питання! Відповідано: " + answered + " з " + cards.length + ".";
+return;
+}
+if (correct === cards.length) {
+f.className = "feedback feedback-success";
+f.innerHTML = "<strong>✅ Чудово!</strong> Усі відповіді правильні! Ти розумієш основи доброчинності.";
+addC("step2_task2");
+showToast("Завдання виконано!", "🎉");
+} else {
+f.className = "feedback feedback-error";
+f.innerHTML = "<strong>❌ " + correct + "/" + cards.length + " правильно.</strong> Подивись на підсвічені картки — червоні потребують уваги. Натисни «Завершити завдання» повторно, щоб спробувати ще раз.";
+// Скинути для повторної спроби
+setTimeout(function() {
+mfState = {};
+var allCards = document.querySelectorAll(".myth-fact-card");
+for (var j = 0; j < allCards.length; j++) {
+allCards[j].classList.remove("answered","correct-answer","incorrect-answer");
+var btns = allCards[j].querySelectorAll(".mf-btn");
+for (var k = 0; k < btns.length; k++) btns[k].classList.remove("selected-truth","selected-myth","correct","incorrect","disabled");
+var res = allCards[j].querySelector(".myth-fact-result");
+if (res) { res.className = "myth-fact-result"; res.innerHTML = ""; }
+}
+f.style.display = "none";
+}, 3500);
+}
+}
+
+// Крок 1
+function chkStartTask() {
+var opts = document.querySelectorAll("#s1t1 .option");
+var f = document.getElementById("s1t1f");
+if (!f) return;
+f.style.display = "block";
+var selOpts = [];
+for (var i = 0; i < opts.length; i++) { if (opts[i].classList.contains("selected")) selOpts.push(opts[i]); }
+if (selOpts.length !== 3) {
+f.className = "feedback feedback-warning";
+f.innerHTML = "⚠️ Обери <strong>рівно 3</strong> варіанти зі списку. Зараз обрано: " + selOpts.length + ".";
+return;
+}
+var correctCount = 0;
+for (var j = 0; j < opts.length; j++) {
+var isCorrect = opts[j].dataset.correct === "true";
+var isSelected = opts[j].classList.contains("selected");
+if (isCorrect && isSelected) { opts[j].classList.add("correct"); correctCount++; }
+else if (!isCorrect && isSelected) opts[j].classList.add("incorrect");
+opts[j].classList.add("disabled");
+}
+if (correctCount === 3) {
+f.className = "feedback feedback-success";
+f.innerHTML = "<strong>✅ Чудово!</strong> Ти обрав(ла) три ключові критерії: з'ясувати потреби, переконатися в безпеці та доречності, поважати гідність. Це приклад відповідального підходу!";
+addC("step1_task1");
+showToast("Завдання виконано!", "🎉");
+} else {
+f.className = "feedback feedback-error";
+f.innerHTML = "<strong>❌ Не зовсім.</strong> Червоним — помилковий вибір. Пам'ятай: доброчинність починається з поваги до потреб і гідності людини.";
+}
+}
+
+// Крок 2 - аналіз ситуацій
+function chkAllRadio(prefix, answers, tid) {
+var f = document.getElementById(prefix + "f");
+if (!f) return;
+f.style.display = "block";
+var ok = 0;
+var total = Object.keys(answers).length;
+for (var gid in answers) {
+var group = document.getElementById(gid);
+if (!group) continue;
+var selected = group.querySelector(".option.selected");
+if (!selected) continue;
+var label = selected.querySelector(".option-label").textContent.trim();
+if (label === answers[gid]) {
+selected.classList.add("correct");
+ok++;
+} else {
+selected.classList.add("incorrect");
+}
+var opts = group.querySelectorAll(".option");
+for (var i = 0; i < opts.length; i++) opts[i].classList.add("disabled");
+}
+if (ok === total) {
+f.className = "feedback feedback-success";
+f.innerHTML = "<strong>✅ Чудово!</strong> Усі відповіді правильні!";
+addC(tid);
+showToast("Завдання виконано!", "🎉");
+} else {
+f.className = "feedback feedback-error";
+f.innerHTML = "<strong>❌ " + ok + "/" + total + " правильно.</strong> Спробуй ще раз.";
+for (var k in answers) {
+var g = document.getElementById(k);
+if (g) {
+var opts = g.querySelectorAll(".option");
+for (var i = 0; i < opts.length; i++) opts[i].classList.remove("selected","correct","incorrect","disabled");
+}
+}
+}
+}
+
+// Крок 3 - світлофор
+var trafficData = [
+{text:"Запитати: «Чи потрібна тобі допомога?»", cat:"green"},
+{text:"Діяти спокійно й за згодою людини", cat:"green"},
+{text:"Подумати: чи не позбавляю я людину самостійності?", cat:"yellow"},
+{text:"Оцінити, чи справді потрібна моя допомога", cat:"yellow"},
+{text:"Жаліти людину", cat:"red"},
+{text:"Торкатися без дозволу", cat:"red"},
+{text:"Говорити замість людини", cat:"red"},
+{text:"Фотографувати без згоди", cat:"red"}
+];
+var trafficState = {selectedItem: null};
+function initTrafficClassify() {
+trafficState.selectedItem = null;
+var bank = document.getElementById("trafficBank");
+if (!bank) return;
+bank.innerHTML = "";
+["trafficGreen","trafficYellow","trafficRed"].forEach(function(id) { var el = document.getElementById(id); if (el) el.innerHTML = ""; });
+var shuffled = trafficData.slice().sort(function() { return Math.random() - 0.5; });
+for (var i = 0; i < shuffled.length; i++) {
+var item = shuffled[i];
+var card = document.createElement("div");
+card.className = "traffic-item";
+card.dataset.cat = item.cat;
+card.innerHTML = '<span>📋</span><span>' + item.text + '</span>';
+card.onclick = (function(el) { return function() { selectTrafficItem(el); }; })(card);
+bank.appendChild(card);
+}
+var f = document.getElementById("s3t1f");
+if (f) f.style.display = "none";
+}
+function selectTrafficItem(el) {
+var parent = el.parentElement;
+if (parent && parent.id !== "trafficBank") {
+document.getElementById("trafficBank").appendChild(el);
+el.classList.remove("selected");
+trafficState.selectedItem = null;
+return;
+}
+var allItems = document.querySelectorAll(".traffic-item");
+for (var i = 0; i < allItems.length; i++) {
+if (allItems[i].parentElement.id !== "trafficBank") continue;
+allItems[i].classList.remove("selected");
+}
+if (trafficState.selectedItem === el) {
+trafficState.selectedItem = null;
+return;
+}
+trafficState.selectedItem = el;
+el.classList.add("selected");
+showToast("Тепер натисни на категорію світлофора", "👆");
+}
+function classifyTrafficTap(colEl) {
+if (event && event.target && event.target.classList && event.target.classList.contains("traffic-item")) return;
+if (!trafficState.selectedItem) {
+showToast("Спочатку натисни на дію", "💡");
+return;
+}
+var category = colEl.dataset.cat;
+var dropZone = document.getElementById("traffic" + category.charAt(0).toUpperCase() + category.slice(1));
+dropZone.appendChild(trafficState.selectedItem);
+trafficState.selectedItem.classList.remove("selected");
+trafficState.selectedItem = null;
+}
+function resetTrafficClassify() { initTrafficClassify(); showToast("Почато спочатку!", "🔄"); }
+function chkTrafficClassify() {
+var f = document.getElementById("s3t1f");
+if (!f) return;
+f.style.display = "block";
+var targets = {trafficGreen:"green", trafficYellow:"yellow", trafficRed:"red"};
+var totalPlaced = 0;
+var ok = true;
+for (var tid in targets) {
+var el = document.getElementById(tid);
+var cards = el.querySelectorAll(".traffic-item");
+totalPlaced += cards.length;
+for (var i = 0; i < cards.length; i++) {
+cards[i].classList.remove("correct","incorrect");
+if (cards[i].dataset.cat !== targets[tid]) {
+cards[i].classList.add("incorrect");
+ok = false;
+} else cards[i].classList.add("correct");
+}
+}
+var bankCards = document.querySelectorAll("#trafficBank .traffic-item");
+if (bankCards.length > 0) {
+f.className = "feedback feedback-warning";
+f.innerHTML = "💡 Розподіли всі дії! Залишилось: " + bankCards.length;
+return;
+}
+if (ok) {
+f.className = "feedback feedback-success";
+f.innerHTML = "<strong>✅ Чудово!</strong> Усі дії класифіковано правильно! Ти розумієш, як діяти тактовно.";
+addC("step3_task1");
+showToast("Завдання виконано!", "🎉");
+} else {
+f.className = "feedback feedback-error";
+f.innerHTML = "<strong>❌ Не зовсім.</strong> Червоним — помилка. Натисни на картку, щоб повернути її в банк.";
+setTimeout(function() {
+var all = document.querySelectorAll(".traffic-item");
+for (var k = 0; k < all.length; k++) all[k].classList.remove("correct","incorrect");
+}, 4000);
+}
+}
+
+// Крок 4 - сортування
+var sortItems = [
+{id:1, text:"👀 ПОМІТИТИ: Будь уважним до живих істот поруч"},
+{id:2, text:"🧠 ОЦІНИТИ: З'ясуй, яка допомога потрібна і чи буде вона безпечною"},
+{id:3, text:"🤝 ДІЯТИ ДОРЕЧНО: Діяти з повагою до потреб інших"},
+{id:4, text:"🔍 ПЕРЕВІРИТИ: Подбати про наслідки, чи була допомога корисною"},
+{id:5, text:"🌱 БЕРЕГТИ ДОВКІЛЛЯ: Підтримувати добрі справи, не завдаючи шкоди природі"}
+];
+var sortState = {selectedCard: null, slots: [null, null, null, null, null]};
+function initSort() {
+sortState.selectedCard = null;
+sortState.slots = [null, null, null, null, null];
+var bank = document.getElementById("sortBank");
+var slotsContainer = document.getElementById("sortSlots");
+if (!bank || !slotsContainer) return;
+bank.innerHTML = "";
+slotsContainer.innerHTML = "";
+var shuffled = sortItems.slice().sort(function() { return Math.random() - 0.5; });
+for (var i = 0; i < shuffled.length; i++) {
+var item = shuffled[i];
+var card = document.createElement("div");
+card.className = "classify-item";
+card.dataset.id = item.id;
+card.style.background = "#fff";
+card.style.padding = "12px";
+card.style.border = "2px solid var(--border)";
+card.style.borderRadius = "8px";
+card.style.marginBottom = "8px";
+card.style.cursor = "pointer";
+card.style.fontSize = "13px";
+card.style.display = "flex";
+card.style.alignItems = "center";
+card.style.gap = "10px";
+card.innerHTML = '<span>📋</span><span>' + item.text + '</span>';
+card.onclick = (function(id, el) { return function() { selectSortCard(id, el); }; })(item.id, card);
+bank.appendChild(card);
+}
+for (var j = 1; j <= 5; j++) {
+var slot = document.createElement("div");
+slot.className = "sort-slot";
+slot.dataset.slotNum = j;
+slot.innerHTML = '<div class="sort-slot-number">' + j + '</div><div class="sort-slot-placeholder">Натисни сюди, щоб поставити крок #' + j + '</div>';
+slot.onclick = (function(num, el) { return function() { placeToSlot(num, el); }; })(j, slot);
+slotsContainer.appendChild(slot);
+}
+var f = document.getElementById("s4t1f");
+if (f) f.style.display = "none";
+}
+function selectSortCard(id, el) {
+for (var i = 0; i < sortState.slots.length; i++) {
+if (sortState.slots[i] === id) {
+sortState.slots[i] = null;
+renderSlots();
+renderBank();
+return;
+}
+}
+var bankCards = document.querySelectorAll("#sortBank .classify-item");
+for (var k = 0; k < bankCards.length; k++) bankCards[k].classList.remove("selected");
+if (sortState.selectedCard === id) {
+sortState.selectedCard = null;
+return;
+}
+sortState.selectedCard = id;
+el.classList.add("selected");
+el.style.borderColor = "var(--warning)";
+el.style.background = "#fef3c7";
+showToast("Тепер натисни на слот (1-5)", "👆");
+}
+function placeToSlot(slotNum, slotEl) {
+if (sortState.slots[slotNum - 1] !== null) {
+sortState.slots[slotNum - 1] = null;
+if (sortState.selectedCard !== null) {
+sortState.slots[slotNum - 1] = sortState.selectedCard;
+sortState.selectedCard = null;
+}
+renderSlots();
+renderBank();
+return;
+}
+if (sortState.selectedCard === null) {
+showToast("Спочатку натисни на крок у верхньому блоці", "💡");
+return;
+}
+for (var i = 0; i < sortState.slots.length; i++) {
+if (sortState.slots[i] === sortState.selectedCard) {
+sortState.slots[i] = null;
+}
+}
+sortState.slots[slotNum - 1] = sortState.selectedCard;
+sortState.selectedCard = null;
+renderSlots();
+renderBank();
+}
+function renderSlots() {
+var slotsContainer = document.getElementById("sortSlots");
+if (!slotsContainer) return;
+var slotEls = slotsContainer.querySelectorAll(".sort-slot");
+for (var i = 0; i < slotEls.length; i++) {
+var slotNum = i + 1;
+var itemId = sortState.slots[i];
+if (itemId === null) {
+slotEls[i].classList.remove("filled","correct-pos","incorrect-pos");
+slotEls[i].innerHTML = '<div class="sort-slot-number">' + slotNum + '</div><div class="sort-slot-placeholder">Натисни сюди, щоб поставити крок #' + slotNum + '</div>';
+slotEls[i].onclick = (function(num, el) { return function() { placeToSlot(num, el); }; })(slotNum, slotEls[i]);
+} else {
+var itemData = sortItems.find(function(x) { return x.id === itemId; });
+slotEls[i].classList.add("filled");
+slotEls[i].classList.remove("correct-pos","incorrect-pos");
+slotEls[i].innerHTML = '<div class="sort-slot-number">' + slotNum + '</div><div class="sort-slot-content">' + itemData.text + '</div><button class="sort-slot-remove" aria-label="Повернути">✕</button>';
+slotEls[i].onclick = (function(num, el) { return function(e) {
+if (e.target.classList.contains("sort-slot-remove")) {
+sortState.slots[num - 1] = null;
+renderSlots();
+renderBank();
+return;
+}
+placeToSlot(num, el);
+}; })(slotNum, slotEls[i]);
+}
+}
+}
+function renderBank() {
+var bank = document.getElementById("sortBank");
+if (!bank) return;
+var cards = bank.querySelectorAll(".classify-item");
+for (var i = 0; i < cards.length; i++) {
+var id = parseInt(cards[i].dataset.id);
+var inSlot = sortState.slots.indexOf(id) !== -1;
+cards[i].classList.remove("selected");
+cards[i].style.borderColor = "";
+cards[i].style.background = "";
+if (inSlot) {
+cards[i].style.borderColor = "var(--warning)";
+cards[i].style.background = "#fef3c7";
+}
+}
+}
+function resetSort() { initSort(); showToast("Перемішано!", "🔄"); }
+function chkSort() {
+var f = document.getElementById("s4t1f");
+if (!f) return;
+f.style.display = "block";
+var filledCount = 0;
+for (var i = 0; i < sortState.slots.length; i++) {
+if (sortState.slots[i] !== null) filledCount++;
+}
+if (filledCount < 5) {
+f.className = "feedback feedback-warning";
+f.innerHTML = "💡 Заповни всі 5 слотів! Заповнено: " + filledCount + " з 5.";
+return;
+}
+var slotsContainer = document.getElementById("sortSlots");
+var slotEls = slotsContainer.querySelectorAll(".sort-slot");
+var ok = true;
+for (var j = 0; j < sortState.slots.length; j++) {
+slotEls[j].classList.remove("correct-pos","incorrect-pos");
+if (sortState.slots[j] === j + 1) slotEls[j].classList.add("correct-pos");
+else { slotEls[j].classList.add("incorrect-pos"); ok = false; }
+}
+if (ok) {
+f.className = "feedback feedback-success";
+f.innerHTML = "<strong>✅ Чудово!</strong> Алгоритм 5 кроків відповідальної допомоги відновлено правильно: ПОМІТИТИ → ОЦІНИТИ → ДІЯТИ ДОРЕЧНО → ПЕРЕВІРИТИ → БЕРЕГТИ ДОВКІЛЛЯ.";
+addC("step4_task1");
+showToast("Завдання виконано!", "🎉");
+} else {
+f.className = "feedback feedback-error";
+f.innerHTML = "<strong>❌ Не зовсім.</strong> Зеленим — правильна позиція, червоним — потрібно переставити.";
+setTimeout(function() {
+for (var k = 0; k < slotEls.length; k++) slotEls[k].classList.remove("correct-pos","incorrect-pos");
+}, 4000);
+}
+}
+
+// Крок 5 - сортування маршруту
+var sortItems2 = [
+{id:1, text:"🔍 ПОМІТЬ ПОТРЕБУ: З'ясуйте, кому потрібна допомога"},
+{id:2, text:"🎯 ОБЕРИ ПОСИЛЬНУ СПРАВУ: Вирішіть, що реально можете зробити"},
+{id:3, text:"🤝 ЗНАЙДИ КОМАНДУ: Залучіть однодумців"},
+{id:4, text:"✅ ПЕРЕВІР ВІДПОВІДНІСТЬ: Переконайтеся, що допомога буде доречною"},
+{id:5, text:"📊 ОЦІНИ РЕЗУЛЬТАТ: Оцініть, що вдалося зробити"}
+];
+var sortState2 = {selectedCard: null, slots: [null, null, null, null, null]};
+function initSort2() {
+sortState2.selectedCard = null;
+sortState2.slots = [null, null, null, null, null];
+var bank = document.getElementById("sortBank2");
+var slotsContainer = document.getElementById("sortSlots2");
+if (!bank || !slotsContainer) return;
+bank.innerHTML = "";
+slotsContainer.innerHTML = "";
+var shuffled = sortItems2.slice().sort(function() { return Math.random() - 0.5; });
+for (var i = 0; i < shuffled.length; i++) {
+var item = shuffled[i];
+var card = document.createElement("div");
+card.className = "classify-item";
+card.dataset.id = item.id;
+card.style.background = "#fff";
+card.style.padding = "12px";
+card.style.border = "2px solid var(--border)";
+card.style.borderRadius = "8px";
+card.style.marginBottom = "8px";
+card.style.cursor = "pointer";
+card.style.fontSize = "13px";
+card.style.display = "flex";
+card.style.alignItems = "center";
+card.style.gap = "10px";
+card.innerHTML = '<span>📋</span><span>' + item.text + '</span>';
+card.onclick = (function(id, el) { return function() { selectSortCard2(id, el); }; })(item.id, card);
+bank.appendChild(card);
+}
+for (var j = 1; j <= 5; j++) {
+var slot = document.createElement("div");
+slot.className = "sort-slot";
+slot.dataset.slotNum = j;
+slot.innerHTML = '<div class="sort-slot-number">' + j + '</div><div class="sort-slot-placeholder">Натисни сюди, щоб поставити крок #' + j + '</div>';
+slot.onclick = (function(num, el) { return function() { placeToSlot2(num, el); }; })(j, slot);
+slotsContainer.appendChild(slot);
+}
+var f = document.getElementById("s5t2f");
+if (f) f.style.display = "none";
+}
+function selectSortCard2(id, el) {
+for (var i = 0; i < sortState2.slots.length; i++) {
+if (sortState2.slots[i] === id) {
+sortState2.slots[i] = null;
+renderSlots2();
+renderBank2();
+return;
+}
+}
+var bankCards = document.querySelectorAll("#sortBank2 .classify-item");
+for (var k = 0; k < bankCards.length; k++) bankCards[k].classList.remove("selected");
+if (sortState2.selectedCard === id) {
+sortState2.selectedCard = null;
+return;
+}
+sortState2.selectedCard = id;
+el.classList.add("selected");
+el.style.borderColor = "var(--warning)";
+el.style.background = "#fef3c7";
+showToast("Тепер натисни на слот (1-5)", "👆");
+}
+function placeToSlot2(slotNum, slotEl) {
+if (sortState2.slots[slotNum - 1] !== null) {
+sortState2.slots[slotNum - 1] = null;
+if (sortState2.selectedCard !== null) {
+sortState2.slots[slotNum - 1] = sortState2.selectedCard;
+sortState2.selectedCard = null;
+}
+renderSlots2();
+renderBank2();
+return;
+}
+if (sortState2.selectedCard === null) {
+showToast("Спочатку натисни на крок у верхньому блоці", "💡");
+return;
+}
+for (var i = 0; i < sortState2.slots.length; i++) {
+if (sortState2.slots[i] === sortState2.selectedCard) {
+sortState2.slots[i] = null;
+}
+}
+sortState2.slots[slotNum - 1] = sortState2.selectedCard;
+sortState2.selectedCard = null;
+renderSlots2();
+renderBank2();
+}
+function renderSlots2() {
+var slotsContainer = document.getElementById("sortSlots2");
+if (!slotsContainer) return;
+var slotEls = slotsContainer.querySelectorAll(".sort-slot");
+for (var i = 0; i < slotEls.length; i++) {
+var slotNum = i + 1;
+var itemId = sortState2.slots[i];
+if (itemId === null) {
+slotEls[i].classList.remove("filled","correct-pos","incorrect-pos");
+slotEls[i].innerHTML = '<div class="sort-slot-number">' + slotNum + '</div><div class="sort-slot-placeholder">Натисни сюди, щоб поставити крок #' + slotNum + '</div>';
+slotEls[i].onclick = (function(num, el) { return function() { placeToSlot2(num, el); }; })(slotNum, slotEls[i]);
+} else {
+var itemData = sortItems2.find(function(x) { return x.id === itemId; });
+slotEls[i].classList.add("filled");
+slotEls[i].classList.remove("correct-pos","incorrect-pos");
+slotEls[i].innerHTML = '<div class="sort-slot-number">' + slotNum + '</div><div class="sort-slot-content">' + itemData.text + '</div><button class="sort-slot-remove" aria-label="Повернути">✕</button>';
+slotEls[i].onclick = (function(num, el) { return function(e) {
+if (e.target.classList.contains("sort-slot-remove")) {
+sortState2.slots[num - 1] = null;
+renderSlots2();
+renderBank2();
+return;
+}
+placeToSlot2(num, el);
+}; })(slotNum, slotEls[i]);
+}
+}
+}
+function renderBank2() {
+var bank = document.getElementById("sortBank2");
+if (!bank) return;
+var cards = bank.querySelectorAll(".classify-item");
+for (var i = 0; i < cards.length; i++) {
+var id = parseInt(cards[i].dataset.id);
+var inSlot = sortState2.slots.indexOf(id) !== -1;
+cards[i].classList.remove("selected");
+cards[i].style.borderColor = "";
+cards[i].style.background = "";
+if (inSlot) {
+cards[i].style.borderColor = "var(--warning)";
+cards[i].style.background = "#fef3c7";
+}
+}
+}
+function resetSort2() { initSort2(); showToast("Перемішано!", "🔄"); }
+function chkSort2() {
+var f = document.getElementById("s5t2f");
+if (!f) return;
+f.style.display = "block";
+var filledCount = 0;
+for (var i = 0; i < sortState2.slots.length; i++) {
+if (sortState2.slots[i] !== null) filledCount++;
+}
+if (filledCount < 5) {
+f.className = "feedback feedback-warning";
+f.innerHTML = "💡 Заповни всі 5 слотів! Заповнено: " + filledCount + " з 5.";
+return;
+}
+var slotsContainer = document.getElementById("sortSlots2");
+var slotEls = slotsContainer.querySelectorAll(".sort-slot");
+var ok = true;
+for (var j = 0; j < sortState2.slots.length; j++) {
+slotEls[j].classList.remove("correct-pos","incorrect-pos");
+if (sortState2.slots[j] === j + 1) slotEls[j].classList.add("correct-pos");
+else { slotEls[j].classList.add("incorrect-pos"); ok = false; }
+}
+if (ok) {
+f.className = "feedback feedback-success";
+f.innerHTML = "<strong>✅ Чудово!</strong> Маршрут доброчинного проєкту відновлено правильно. Тепер ти знаєш, як перетворити ідею на реальну справу!";
+addC("step5_task2");
+showToast("Завдання виконано!", "🎉");
+} else {
+f.className = "feedback feedback-error";
+f.innerHTML = "<strong>❌ Не зовсім.</strong> Зеленим — правильна позиція, червоним — потрібно переставити.";
+setTimeout(function() {
+for (var k = 0; k < slotEls.length; k++) slotEls[k].classList.remove("correct-pos","incorrect-pos");
+}, 4000);
+}
+}
+
+// Універсальні функції
+function tog(el) {
+if (el.classList.contains("disabled")) return;
+el.classList.toggle("selected");
+}
+function selRadio(el, groupId) {
+if (el.classList.contains("disabled")) return;
+var group = document.getElementById(groupId);
+var opts = group.querySelectorAll(".option");
+for (var i = 0; i < opts.length; i++) opts[i].classList.remove("selected");
+el.classList.add("selected");
+}
+function chkMulti(gid, fid, need, tid) {
+var opts = document.querySelectorAll("#" + gid + " .option");
+var f = document.getElementById(fid);
+if (!f) return;
+f.style.display = "block";
+var selOpts = [];
+for (var i = 0; i < opts.length; i++) { if (opts[i].classList.contains("selected")) selOpts.push(opts[i]); }
+if (selOpts.length !== need) {
+f.className = "feedback feedback-warning";
+f.innerHTML = "⚠️ Обери <strong>" + need + "</strong> варіанти. Зараз обрано: " + selOpts.length + ".";
+return;
+}
+var ok = true;
+for (var j = 0; j < opts.length; j++) {
+var sb = opts[j].dataset.correct === "true";
+var is = opts[j].classList.contains("selected");
+if (sb && is) opts[j].classList.add("correct");
+else if (!sb && is) { opts[j].classList.add("incorrect"); ok = false; }
+else if (sb && !is) ok = false;
+opts[j].classList.add("disabled");
+}
+if (ok) {
+f.className = "feedback feedback-success";
+f.innerHTML = "<strong>✅ Правильно!</strong> Це обґрунтований вибір.";
+addC(tid);
+showToast("Завдання виконано!", "🎉");
+} else {
+f.className = "feedback feedback-error";
+f.innerHTML = "<strong>❌ Не зовсім.</strong> Спробуй ще раз.";
+for (var k = 0; k < opts.length; k++) opts[k].classList.remove("correct","incorrect","disabled");
+}
+}
+function chkRadio(gid, fid, tid) {
+var opts = document.querySelectorAll("#" + gid + " .option");
+var f = document.getElementById(fid);
+if (!f) return;
+f.style.display = "block";
+var selected = null;
+for (var i = 0; i < opts.length; i++) { if (opts[i].classList.contains("selected")) { selected = opts[i]; break; } }
+if (!selected) {
+f.className = "feedback feedback-warning";
+f.innerHTML = "⚠️ Обери один варіант відповіді.";
+return;
+}
+var isCorrect = selected.dataset.correct === "true";
+if (isCorrect) {
+selected.classList.add("correct");
+f.className = "feedback feedback-success";
+f.innerHTML = "<strong>✅ Правильно!</strong>";
+for (var j = 0; j < opts.length; j++) opts[j].classList.add("disabled");
+addC(tid);
+showToast("Завдання виконано!", "🎉");
+} else {
+selected.classList.add("incorrect");
+f.className = "feedback feedback-error";
+f.innerHTML = "<strong>❌ Неправильно.</strong> Спробуй ще раз.";
+}
+}
+function toggleAccordion(header) {
+var item = header.parentElement;
+var wasActive = item.classList.contains("active");
+var parent = item.parentElement;
+var items = parent.querySelectorAll(".accordion-item");
+for (var i = 0; i < items.length; i++) items[i].classList.remove("active");
+if (!wasActive) {
+item.classList.add("active");
+setTimeout(function() {
+if (window.innerWidth <= 768) {
+var rect = item.getBoundingClientRect();
+if (rect.top < 100 || rect.bottom > window.innerHeight) {
+item.scrollIntoView({behavior: "smooth", block: "start"});
+}
+}
+}, 100);
+}
+}
+function rate(si, r) {
+state.sr[si - 1] = r;
+saveP();
+var c = document.querySelector('.star-rating[data-skill="' + si + '"]');
+if (!c) return;
+var stars = c.querySelectorAll(".star");
+for (var i = 0; i < stars.length; i++) {
+if (i < r) stars[i].classList.add("active");
+else stars[i].classList.remove("active");
+}
+}
+function resetProgress() {
+if (confirm("Почати спочатку? Весь прогрес буде скинуто.")) {
+sessionStorage.removeItem("s31v1");
+localStorage.removeItem("s31v1");
+location.reload();
+}
+}
+function showToast(msg, icon) {
+icon = icon || "✅";
+var c = document.getElementById("toastContainer");
+if (!c) return;
+var t = document.createElement("div");
+t.className = "toast";
+t.innerHTML = '<span class="toast-icon">' + icon + '</span><span class="toast-message">' + msg + '</span>';
+c.appendChild(t);
+setTimeout(function() { t.classList.add("hiding"); setTimeout(function() { t.remove(); }, 400); }, 3000);
+}
+function showProgressModal() {
+updS6();
+document.getElementById("progressModal").classList.add("active");
+var c = 0;
+for (var i = 1; i <= 5; i++) c += ST["step" + i].c;
+var p = Math.min(100, Math.round(c / TOTAL_TASKS * 100));
+var ac = PT.t > 0 ? Math.round(PT.c / PT.t * 100) : 0;
+var cs = 0;
+for (var j = 1; j <= 5; j++) { if (SC[j]) cs++; }
+var e = function(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+e("mT", c + "/" + TOTAL_TASKS);
+e("mC", PT.c);
+e("mS", cs + "/5");
+e("mA", ac + "%");
+e("mP", p + "%");
+var b = document.getElementById("mBar");
+if (b) b.style.width = p + "%";
+var l = "Початківець", em = "⭐☆☆☆☆";
+if (p >= 76) { l = "Доброчинний лідер"; em = "⭐⭐⭐⭐⭐"; }
+else if (p >= 51) { l = "Активний волонтер"; em = "⭐⭐⭐☆☆"; }
+else if (p >= 26) { l = "Свідомий учень"; em = "⭐⭐☆☆☆"; }
+e("mName", l);
+e("mEmoji", em);
+}
+function showHelpModal() { document.getElementById("helpModal").classList.add("active"); }
+function closeModal(id) { document.getElementById(id).classList.remove("active"); }
+var overlays = document.querySelectorAll(".modal-overlay");
+for (var oi = 0; oi < overlays.length; oi++) {
+overlays[oi].addEventListener("click", function(e) { if (e.target === this) this.classList.remove("active"); });
+}
+document.addEventListener("keydown", function(e) {
+if (e.key === "Escape") { var ms = document.querySelectorAll(".modal-overlay.active"); for (var i = 0; i < ms.length; i++) ms[i].classList.remove("active"); }
+});
+document.addEventListener("DOMContentLoaded", function() {
+loadP();
+goToMainPage();
+});
+</script>
+</body>
+</html>
