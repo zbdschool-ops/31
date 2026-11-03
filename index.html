@@ -350,11 +350,11 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 </ul></div>
 <div class="card" style="margin:0"><h3>📋 Що ти робитимеш?</h3>
 <ul class="feature-list">
-<li data-icon="✅">Обереш критерії для доброчинної акції</li>
-<li data-icon="🔍">Проаналізуєш 4 ситуації допомоги</li>
+<li data-icon="✅">Обереш критерії доброчинної акції. </li>
+<li data-icon="🔍">Проаналізуєш чотири ситуації, пов’язані з наданням допомоги.</li>
 <li data-icon="🚦">Розподілиш дії за «світлофором підтримки»</li>
-<li data-icon="🧩">Відновиш порядок 5 кроків відповідальної допомоги</li>
-<li data-icon="🗺️">Сплануєш маршрут доброчинного проєкту</li>
+<li data-icon="🧩">Відновиш послідовність п’яти кроків відповідальної допомоги.</li>
+<li data-icon="🗺️">Сплануєш маршрут доброчинного проєкту.</li>
 <li data-icon="⭐">Оціниш свої вміння</li>
 </ul></div>
 </div>
@@ -472,17 +472,17 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <div class="navigation"><button class="btn btn-secondary" onclick="showS2('s2Theory')">← Назад</button><button class="btn btn-primary" onclick="chkAllRadio('s2t1',{s2t1q1:'✅ Так, допомога доречна та тактовна',s2t1q2:'❌ Ні, потрібен відповідальніший підхід',s2t1q3:'✅ Так, допомога доречна та відповідальна',s2t1q4:'❌ Ні, потрібен відповідальніший підхід'},'step2_task1')">✓ Завершити</button><button class="btn btn-success" onclick="showS2('s2t2')">Далі →</button></div>
 </section>
 <section class="card hidden" id="s2t2">
-<h2>✅❌ Завдання 2. Доброчинність: правда чи уявлення?</h2>
-<div class="feedback feedback-warning mb-24"><strong>📌 Інструкція:</strong> Для кожного твердження обери — це правда чи уявлення. Після вибору ти одразу побачиш результат.</div>
+<h2>✅❌ Завдання 2. Доброчинність:ТАК/НІ?</h2>
+<div class="feedback feedback-warning mb-24"><strong>📌 Інструкція:</strong> Для кожного твердження обери твердження "ТАК" чи "НІ". Після вибору ти одразу побачиш результат.</div>
 <div class="myth-fact-grid" id="mfGrid">
 <div class="myth-fact-card" data-id="mf1" data-correct="truth">
 <div class="myth-fact-header">
 <div class="myth-fact-number">1</div>
-<div class="myth-fact-text">Доброчинна допомога має бути доречною, чистою, безпечною і поважною.</div>
+<div class="myth-fact-text">Доброчинна допомога має бути доречною, безпечною та ґрунтуватися на повазі до інших. </div>
 </div>
 <div class="myth-fact-buttons">
-<button class="mf-btn mf-btn-truth" onclick="mfSelect('mf1','truth',this)" tabindex="0"><span class="mf-btn-icon">✅</span><span>ПРАВДА</span></button>
-<button class="mf-btn mf-btn-myth" onclick="mfSelect('mf1','myth',this)" tabindex="0"><span class="mf-btn-icon">❌</span><span>УЯВЛЕННЯ</span></button>
+<button class="mf-btn mf-btn-truth" onclick="mfSelect('mf1','truth',this)" tabindex="0"><span class="mf-btn-icon">✅</span><span>ТАК</span></button>
+<button class="mf-btn mf-btn-myth" onclick="mfSelect('mf1','myth',this)" tabindex="0"><span class="mf-btn-icon">❌</span><span>НІ</span></button>
 </div>
 <div class="myth-fact-result" id="mf1-result"></div>
 </div>
@@ -492,8 +492,8 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <div class="myth-fact-text">Можна розголошувати особисту інформацію людей, яким допомагають, щоб зібрати більше коштів.</div>
 </div>
 <div class="myth-fact-buttons">
-<button class="mf-btn mf-btn-truth" onclick="mfSelect('mf2','truth',this)" tabindex="0"><span class="mf-btn-icon">✅</span><span>ПРАВДА</span></button>
-<button class="mf-btn mf-btn-myth" onclick="mfSelect('mf2','myth',this)" tabindex="0"><span class="mf-btn-icon">❌</span><span>УЯВЛЕННЯ</span></button>
+<button class="mf-btn mf-btn-truth" onclick="mfSelect('mf2','truth',this)" tabindex="0"><span class="mf-btn-icon">✅</span><span>ТАК</span></button>
+<button class="mf-btn mf-btn-myth" onclick="mfSelect('mf2','myth',this)" tabindex="0"><span class="mf-btn-icon">❌</span><span>НІ</span></button>
 </div>
 <div class="myth-fact-result" id="mf2-result"></div>
 </div>
@@ -503,8 +503,8 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <div class="myth-fact-text">Перед тим, як допомагати, важливо з'ясувати реальні потреби тих, кому ти хочеш допомогти.</div>
 </div>
 <div class="myth-fact-buttons">
-<button class="mf-btn mf-btn-truth" onclick="mfSelect('mf3','truth',this)" tabindex="0"><span class="mf-btn-icon">✅</span><span>ПРАВДА</span></button>
-<button class="mf-btn mf-btn-myth" onclick="mfSelect('mf3','myth',this)" tabindex="0"><span class="mf-btn-icon">❌</span><span>УЯВЛЕННЯ</span></button>
+<button class="mf-btn mf-btn-truth" onclick="mfSelect('mf3','truth',this)" tabindex="0"><span class="mf-btn-icon">✅</span><span>ТАК</span></button>
+<button class="mf-btn mf-btn-myth" onclick="mfSelect('mf3','myth',this)" tabindex="0"><span class="mf-btn-icon">❌</span><span>НІ</span></button>
 </div>
 <div class="myth-fact-result" id="mf3-result"></div>
 </div>
@@ -528,7 +528,7 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 
 <!-- НОВИЙ СХЕМАТИЧНИЙ СВІТЛОФОР -->
 <h3 style="margin:24px 0 16px;color:var(--primary);display:flex;align-items:center;gap:10px">🚦 Світлофор тактовної підтримки</h3>
-<p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;text-align:center;font-style:italic">👆 Натисни на будь-який ліхтар, щоб побачити деталі</p>
+<p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;text-align:center;font-style:italic">👆 Натисни на будь-який колір світлофора, щоб дізнатися більше. </p>
 <div class="traffic-light-scheme">
 <div class="traffic-light-title">Обери правильну поведінку під час підтримки</div>
 <div class="traffic-lights-row">
@@ -697,11 +697,11 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background
 <div class="situation-content-right">
 <p style="margin:12px 0;color:var(--text-muted);font-style:italic">🎯 <strong>Які дії будуть найвідповідальнішими?</strong></p>
 <div class="task-options" id="s4t2">
-<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">📞 Зателефонувати до ветеринарів або волонтерів</div></div></div>
-<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">🛡️ Забезпечити безпеку собі та тварині</div></div></div>
-<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">👀 Помітити тварину та оцінити ситуацію</div></div></div>
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">🛡️ Дотримуватися безпечної відстані та не наражати себе й тварину на небезпеку</div></div></div>
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">👀 Оцінити ситуацію з безпечної відстані</div></div></div>
 <div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">📸 Зробити фото для соцмереж, не допомагаючи</div></div></div>
 <div class="option" data-correct="false" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">🏃 Пройти повз — це не моя справа</div></div></div>
+<div class="option" data-correct="true" onclick="tog(this)" tabindex="0" role="checkbox"><div class="option-checkbox"></div><div class="option-text"><div class="option-label">📞 Звернутися по допомогу до ветеринарної служби або зоозахисників</div></div></div>
 </div>
 <div id="s4t2f" class="feedback" style="display:none"></div>
 </div>
